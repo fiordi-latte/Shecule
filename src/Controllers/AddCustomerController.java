@@ -44,6 +44,7 @@ public class AddCustomerController implements Initializable {
 
             String name = customerNameInput.getText();
             Customer newCustomer = new Customer(name);
+            newCustomer.setCustID(id);
             try {
                 CustomerMgmt.addCustomer(newCustomer);
             } catch (SQLException ex) {

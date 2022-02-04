@@ -19,12 +19,12 @@ public class CustomerMgmt {
 
     public static void addCustomer(Customer customer) throws SQLException {
         //String query = "INSERT INTO customers VALUES (" + customer.getCustID() + "";
-       /** String query = "INSERT INTO customers VALUES (4, 'blah blah', '142 adsf', '01291', '124', '2022-02-02 11:42:11', '124', '2022-02-02 11:42:11', '124', '29')";
+        String query = "INSERT INTO customers VALUES ('"+customer.getCustID()+"', '"+customer.getCustName()+"', '142 adsf', '01291', '124', '2022-02-02 11:42:11', '124', '2022-02-02 11:42:11', '124', '29')";
 
         PreparedStatement sm = conn.prepareStatement(query);
         sm.executeUpdate();
         Customer newCustomer = new Customer(customer.getCustName());
-        allCustomers.add(newCustomer);**/
+        allCustomers.add(newCustomer);
     }
 
     public static ObservableList<Customer> getCustomers() {
