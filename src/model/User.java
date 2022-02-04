@@ -1,4 +1,4 @@
-package sample;
+package model;
 
 public class User {
     private String userName;

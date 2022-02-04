@@ -1,7 +1,4 @@
-package sample;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+package model;
 
 public class Customer {
 
@@ -14,10 +11,6 @@ public class Customer {
 
 
     public Customer(String name){
-        this.custName = name;
-    }
-
-    public void setCustName(String name){
         this.custName = name;
     }
 
