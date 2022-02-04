@@ -10,9 +10,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Country;
 import model.Customer;
+import model.Division;
 import model.JDBC;
+import util.CountryMgmt;
 import util.CustomerMgmt;
+import util.DivisionMgmt;
 
 
 import java.io.IOException;
@@ -30,9 +34,29 @@ public class AddCustomerController implements Initializable {
     public ComboBox customerStateInput;
     public Button saveButton;
     public Button cancelButton;
+    public Country selectedCountry;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        for(Country country : CountryMgmt.getCountries()){
+            customerCountryInput.getItems().add(country.getName());
+        };
+        System.out.println(selectedCountry.getID());
+
+        if (selectedCountry != null) {
+        System.out.println(selectedCountry.getID());
+        selectedCountry = (Country) customerCountryInput.getSelectionModel().getSelectedItem();
+
+        int cid = selectedCountry.getID();
+
+            for (Division division : DivisionMgmt.getDivisions()) {
+                if (division.getCountryID() == cid) {
+                    customerStateInput.getItems().add(division.getName());
+                }
+            }
+        }
+
+
         saveButton.setOnAction(e -> {
             int id;
             if(CustomerMgmt.getAllCustomers().isEmpty()){

@@ -1,4 +1,5 @@
 package model;
+import java.time.LocalDateTime;
 
 public class Customer {
 
@@ -8,6 +9,8 @@ public class Customer {
     private int custZip;
     private String custPhone;
     private int custDiv;
+    private LocalDateTime custCreateTime;
+    private LocalDateTime lastUpdate;
 
 
     public Customer(String name){
@@ -46,6 +49,7 @@ public class Customer {
         return custPhone;
     }
 
+
     public void setCustDiv(int div){
         this.custDiv = div;
     }
@@ -54,7 +58,20 @@ public class Customer {
         return custDiv;
     }
 
+    public void setCreateTime(LocalDateTime createTime){
+        this.custCreateTime = createTime;
+    }
 
+    public LocalDateTime getCustCreateTime(){
+        return custCreateTime;
+    }
 
+    public void setLastUpdate(LocalDateTime updateTime){
+        this.lastUpdate = updateTime;
+    }
+
+    public LocalDateTime getLastUpdate(){
+        return lastUpdate;
+    }
 
 }
