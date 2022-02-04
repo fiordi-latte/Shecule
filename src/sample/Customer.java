@@ -4,10 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Customer {
-    public static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
     private int custID;
     private String custName;
+    private String custAddress;
+    private int custZip;
+    private String custPhone;
+    private int custDiv;
+
 
     public Customer(String name){
         this.custName = name;
@@ -29,7 +33,31 @@ public class Customer {
         return custID;
     }
 
-    public getCustomers(){
-
+    public void setCustAddress(String address){
+        this.custAddress = address;
     }
+
+    public String getCustAdress(){
+        return custAddress;
+    }
+
+    public void setCustPhone(String phone){
+        this.custPhone = phone;
+    }
+
+    public String getCustPhone(){
+        return custPhone;
+    }
+
+    public void setCustDiv(int div){
+        this.custDiv = div;
+    }
+
+    public int getCustDiv(){
+        return custDiv;
+    }
+
+
+
+
 }
