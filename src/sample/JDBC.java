@@ -35,7 +35,8 @@ public class JDBC {
             public static Connection getConnection() {
                 return connection;
             }
-             public static void closeConnection() {
+
+            public static void closeConnection() {
                  try {
                      connection.close();
                      System.out.println("Connection closed!");
