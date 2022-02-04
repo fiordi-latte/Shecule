@@ -13,8 +13,18 @@ public class CustomerMgmt {
     private static final Connection conn = JDBC.getConnection();
     public static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
-    public void addCustomers(Customer customer) {
-        allCustomers.add(customer);
+    public static ObservableList<Customer> getAllCustomers( ) {
+        return allCustomers;
+    }
+
+    public static void addCustomer(Customer customer) throws SQLException {
+        //String query = "INSERT INTO customers VALUES (" + customer.getCustID() + "";
+       /** String query = "INSERT INTO customers VALUES (4, 'blah blah', '142 adsf', '01291', '124', '2022-02-02 11:42:11', '124', '2022-02-02 11:42:11', '124', '29')";
+
+        PreparedStatement sm = conn.prepareStatement(query);
+        sm.executeUpdate();
+        Customer newCustomer = new Customer(customer.getCustName());
+        allCustomers.add(newCustomer);**/
     }
 
     public static ObservableList<Customer> getCustomers() {
@@ -26,15 +36,13 @@ public class CustomerMgmt {
             while (rs.next()) {
                 String customerName = rs.getString("Customer_Name");
                 int id = rs.getInt("Customer_ID");
-                //String address = rs.getString()
                 Customer newCustomer = new Customer(customerName);
                 newCustomer.setCustID(id);
+                newCustomer.setCustName(customerName);
 
-                System.out.println(customerName);
-                System.out.println(id);
 
                 allCustomers.add(newCustomer);
-                //System.out.println(allCustomers);
+
 
             }
         } catch (SQLException e) {

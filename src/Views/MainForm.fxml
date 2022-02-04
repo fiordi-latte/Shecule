@@ -15,14 +15,13 @@
             <Button fx:id="addCust" layoutX="43.0" layoutY="267.0" mnemonicParsing="false" text="Add" />
             <Button fx:id="updateCust" layoutX="117.0" layoutY="267.0" mnemonicParsing="false" text="Update" />
             <Button fx:id="deleteCust" layoutX="191.0" layoutY="267.0" mnemonicParsing="false" text="Delete" />
-            <TableView layoutX="43.0" layoutY="43.0" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="customerView" layoutX="43.0" layoutY="43.0" prefHeight="200.0" prefWidth="200.0">
               <columns>
-                <TableColumn fx:id="custID" prefWidth="75.0" text="ID" />
-                <TableColumn fx:id="custName" prefWidth="75.0" text="Name" />
+                <TableColumn fx:id="customerName" prefWidth="150.0" text="Name" />
               </columns>
             </TableView>
             <Label layoutX="48.0" layoutY="14.0" text="Customers" />
-            <TableView layoutX="352.0" layoutY="43.0" prefHeight="200.0" prefWidth="200.0">
+            <TableView layoutX="338.0" layoutY="52.0" prefHeight="200.0" prefWidth="200.0">
               <columns>
                 <TableColumn prefWidth="75.0" text="C1" />
                 <TableColumn prefWidth="75.0" text="C2" />
