@@ -14,8 +14,10 @@ public class CountryMgmt {
     private static final Connection conn = JDBC.getConnection();
 
     public static ObservableList<Country> countries = FXCollections.observableArrayList();
-
-    public static ObservableList<Country> getCountries(){
+    public static ObservableList<Country> getCountryList(){
+        return countries;
+    }
+    public static void setCountries(){
         try {
 
             String query = "SELECT * FROM countries;";
@@ -26,7 +28,7 @@ public class CountryMgmt {
                 int id = rs.getInt("Country_ID");
                 Country newCountry = new Country(countryName);
                 newCountry.setID(id);
-                //newCountry.setCustID(id);
+
                 newCountry.setName(countryName);
 
 
@@ -37,6 +39,6 @@ public class CountryMgmt {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return countries;
+
     }
 }

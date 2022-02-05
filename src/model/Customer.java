@@ -37,6 +37,14 @@ public class Customer {
         this.custAddress = address;
     }
 
+    public void setCustZip(int zip){
+        this.custZip = zip;
+    }
+
+    public int getCustZip(){
+        return custZip;
+    }
+
     public String getCustAdress(){
         return custAddress;
     }

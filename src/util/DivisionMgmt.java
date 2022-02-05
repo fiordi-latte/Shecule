@@ -2,6 +2,7 @@ package util;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import model.Country;
 import model.Division;
 import model.JDBC;
@@ -14,7 +15,20 @@ public class DivisionMgmt {
 
     public static ObservableList<Division> divisions = FXCollections.observableArrayList();
 
-    public static ObservableList<Division> getDivisions(){
+    public static ObservableList<Division> getDivisions() {
+        return divisions;
+    }
+
+    public static int getDivisionID(String name){
+        for(Division division : divisions){
+            if(division.getName() == name){
+                return division.getID();
+            }
+        }
+        return 0;
+    }
+
+    public static void setDivisions(){
         try {
 
             String query = "SELECT * FROM first_level_divisions;";
@@ -29,7 +43,7 @@ public class DivisionMgmt {
                 //newCountry.setCustID(id);
                 newDivision.setName(divisionName);
                 newDivision.setCountryID(cid);
-
+                newDivision.setID(id);
 
                 divisions.add(newDivision);
 
@@ -38,6 +52,6 @@ public class DivisionMgmt {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return divisions;
+
     }
 }

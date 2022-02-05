@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.JDBC;
+import model.User;
 
 
 import java.io.IOException;
@@ -71,6 +72,8 @@ public class LoginController implements Initializable {
             ResultSet rs = sm.executeQuery("SELECT * FROM USERS WHERE User_Name = '" + userName + "' AND Password = '"+ password + "'");
             if(rs.next()){
                 String user = rs.getString("User_Name");
+                User.setUsers();
+
                 System.out.println(user);
                 return Boolean.TRUE;
             }

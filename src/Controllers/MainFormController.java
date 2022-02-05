@@ -11,10 +11,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Customer;
+import util.CountryMgmt;
 import util.CustomerMgmt;
+import util.DivisionMgmt;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class MainFormController implements Initializable{
@@ -27,9 +31,12 @@ public class MainFormController implements Initializable{
     @FXML
     public Button addCust;
     public static ObservableList<Customer> customers = FXCollections.observableArrayList();
+    LocalDateTime time = LocalDateTime.now();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        CountryMgmt.setCountries();
+        DivisionMgmt.setDivisions();
         CustomerMgmt.getCustomers();
         //customerID.setCellValueFactory(new PropertyValueFactory<>("custId"));
         customerName.setCellValueFactory(new PropertyValueFactory<>("custName"));

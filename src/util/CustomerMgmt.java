@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Customer;
 import model.JDBC;
+import model.User;
 
 import java.sql.*;
 
@@ -12,14 +13,18 @@ public class CustomerMgmt {
     Statement sm = null;
     private static final Connection conn = JDBC.getConnection();
     public static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
-
+    public static ObservableList<User> currentUser = FXCollections.observableArrayList();
     public static ObservableList<Customer> getAllCustomers( ) {
         return allCustomers;
     }
 
     public static void addCustomer(Customer customer) throws SQLException {
+        //currentUser = User.getUsers();
+        User newUser = new User();
+        newUser.setUserName("admin");
         //String query = "INSERT INTO customers VALUES (" + customer.getCustID() + "";
-        String query = "INSERT INTO customers VALUES ('"+customer.getCustID()+"', '"+customer.getCustName()+"', '142 adsf', '01291', '124', '2022-02-02 11:42:11', '124', '2022-02-02 11:42:11', '124', '29')";
+        String query = "INSERT INTO customers VALUES ('"+customer.getCustID()+"', '"+customer.getCustName()+"', '" + customer.getCustAdress() + "', '" + customer.getCustZip() + "','" +customer.getCustPhone()+ "', '"
+        + customer.getCustCreateTime() + "',' "+ newUser.getUserName() +"' ,'" + customer.getLastUpdate() +"', '"+ newUser.getUserName() +"', '" + customer.getCustDiv() + "')";
 
         PreparedStatement sm = conn.prepareStatement(query);
         sm.executeUpdate();
