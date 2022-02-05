@@ -22,7 +22,8 @@ public class CustomerMgmt {
         //currentUser = User.getUsers();
         User newUser = new User();
         newUser.setUserName("admin");
-        //String query = "INSERT INTO customers VALUES (" + customer.getCustID() + "";
+
+        //TODO fix username
         String query = "INSERT INTO customers VALUES ('"+customer.getCustID()+"', '"+customer.getCustName()+"', '" + customer.getCustAdress() + "', '" + customer.getCustZip() + "','" +customer.getCustPhone()+ "', '"
         + customer.getCustCreateTime() + "',' "+ newUser.getUserName() +"' ,'" + customer.getLastUpdate() +"', '"+ newUser.getUserName() +"', '" + customer.getCustDiv() + "')";
 

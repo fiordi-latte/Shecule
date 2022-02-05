@@ -9,6 +9,7 @@ import java.sql.*;
 public class User {
     private static String userName;
     private String userPassword;
+    private boolean isCurrent;
     //public static String user;
     public static ObservableList<User> users = FXCollections.observableArrayList();
     private static final Connection conn = JDBC.getConnection();
@@ -30,6 +31,11 @@ public class User {
         this.userName = userName;
     }
 
+    public boolean isCurrent(){
+        this.isCurrent = true;
+        return true;
+    }
+
     public static ObservableList<User> getUsers(){
         return users;
     }
@@ -39,12 +45,12 @@ public class User {
     }
 
     public static void setUsers() throws SQLException {
-        String query = "SELECT * FROM customers";
+        String query = "SELECT * FROM users";
         PreparedStatement sm = conn.prepareStatement(query);
         ResultSet rs = sm.executeQuery(query);
         while (rs.next()) {
-            String customerName = rs.getString("Customer_Name");
-            int id = rs.getInt("Customer_ID");
+            String customerName = rs.getString("User_Name");
+
             User newUser = new User();
 
             newUser.setUserName(userName);
