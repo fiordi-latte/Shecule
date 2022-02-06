@@ -44,8 +44,23 @@ public class UpdateCustomerController implements Initializable {
         customerZipCodeInput.setText(updateCustomer.getCustZip());
 
         customerCountryInput.getSelectionModel().select(updateCustomer.getCustCid());
-        customerStateInput.getSelectionModel().select(updateCustomer.getCustDiv());
 
+        //customerStateInput.getItems().add(division.getName());
+        //Division currentDivision =
+        /**
+         * Get the name of the selected customers division
+         */
+        String divisionName = DivisionMgmt.getDivisionName(Integer.parseInt(updateCustomer.getCustDiv()));
+        //System.out.println(divisionName);
+        DivisionMgmt.getDivisionName(Integer.parseInt(updateCustomer.getCustDiv()));
+        customerStateInput.getSelectionModel().select(DivisionMgmt.getDivisionName(Integer.parseInt(updateCustomer.getCustDiv())));
+
+        /**
+         * get country ID from division
+         */
+
+        int countryID = DivisionMgmt.getCountryName(Integer.parseInt(updateCustomer.getCustDiv()));
+        //System.out.println(DivisionMgmt.getCountryName(Integer.parseInt(updateCustomer.getCustDiv())));
 
         for(Country country : CountryMgmt.getCountryList()){
             customerCountryInput.getItems().add(country.getName());

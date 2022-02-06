@@ -28,6 +28,24 @@ public class DivisionMgmt {
         return 0;
     }
 
+    public static String getDivisionName(int id){
+        for(Division division : divisions){
+            if(division.getID() == id){
+                return division.getName();
+            }
+        }
+         return "";
+    }
+
+    public static int getCountryName(int id){
+        for(Division division : divisions){
+            if(division.getID() == id){
+                return division.getCountryID();
+            }
+        }
+        return -1;
+    }
+
     public static void setDivisions(){
         try {
 
