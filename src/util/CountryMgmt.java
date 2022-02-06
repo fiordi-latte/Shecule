@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Country;
 import model.Customer;
+import model.Division;
 import model.JDBC;
 
 import java.sql.*;
@@ -17,6 +18,16 @@ public class CountryMgmt {
     public static ObservableList<Country> getCountryList(){
         return countries;
     }
+
+    public static String getCountryName(int id){
+        for(Country country : countries){
+            if(country.getID() == id){
+                return country.getName();
+            }
+        }
+        return "";
+    }
+
     public static void setCountries(){
         try {
 

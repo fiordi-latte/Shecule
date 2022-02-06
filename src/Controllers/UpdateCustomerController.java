@@ -54,14 +54,16 @@ public class UpdateCustomerController implements Initializable {
         //System.out.println(divisionName);
         DivisionMgmt.getDivisionName(Integer.parseInt(updateCustomer.getCustDiv()));
         customerStateInput.getSelectionModel().select(DivisionMgmt.getDivisionName(Integer.parseInt(updateCustomer.getCustDiv())));
+        selectedDivision = divisionName;
 
         /**
          * get country ID from division
          */
 
         int countryID = DivisionMgmt.getCountryName(Integer.parseInt(updateCustomer.getCustDiv()));
-        //System.out.println(DivisionMgmt.getCountryName(Integer.parseInt(updateCustomer.getCustDiv())));
 
+        customerCountryInput.getSelectionModel().select(CountryMgmt.getCountryName
+                (countryID));
         for(Country country : CountryMgmt.getCountryList()){
             customerCountryInput.getItems().add(country.getName());
         }
@@ -108,6 +110,9 @@ public class UpdateCustomerController implements Initializable {
         });
 
         saveButton.setOnAction(e -> {
+            /**
+             *
+             *
             int id;
             if(CustomerMgmt.getAllCustomers().isEmpty()){
                 id = 0;
@@ -115,6 +120,7 @@ public class UpdateCustomerController implements Initializable {
             else {
                 id = CustomerMgmt.getAllCustomers().size() + 1;
             }
+            */
 
 
 
@@ -137,7 +143,7 @@ public class UpdateCustomerController implements Initializable {
             }
 
             Customer newCustomer = new Customer(name);
-            newCustomer.setCustID(id);
+            //newCustomer.setCustID(id);
             newCustomer.setCustAddress(address);
             newCustomer.setCustDiv(divisionID);
             newCustomer.setCustPhone(phone);
