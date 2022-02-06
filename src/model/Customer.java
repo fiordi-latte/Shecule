@@ -6,15 +6,23 @@ public class Customer {
     private int custID;
     private String custName;
     private String custAddress;
-    private int custZip;
+    private String custZip;
     private String custPhone;
-    private int custDiv;
+    private String custDiv;
+    private int custCid;
     private LocalDateTime custCreateTime;
     private LocalDateTime lastUpdate;
 
-
     public Customer(String name){
         this.custName = name;
+    }
+
+    public void setCustCid(int cid){
+        this.custCid = cid;
+    }
+
+    public int getCustCid(){
+        return custCid;
     }
 
     public void setCustName(String name){
@@ -37,11 +45,11 @@ public class Customer {
         this.custAddress = address;
     }
 
-    public void setCustZip(int zip){
+    public void setCustZip(String zip){
         this.custZip = zip;
     }
 
-    public int getCustZip(){
+    public String getCustZip(){
         return custZip;
     }
 
@@ -58,11 +66,11 @@ public class Customer {
     }
 
 
-    public void setCustDiv(int div){
+    public void setCustDiv(String div){
         this.custDiv = div;
     }
 
-    public int getCustDiv(){
+    public String getCustDiv(){
         return custDiv;
     }
 

@@ -12,7 +12,7 @@ public class CustomerMgmt {
 
     Statement sm = null;
     private static final Connection conn = JDBC.getConnection();
-    public static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+    public static final ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
     public static ObservableList<User> currentUser = FXCollections.observableArrayList();
     public static ObservableList<Customer> getAllCustomers( ) {
         return allCustomers;
@@ -29,8 +29,9 @@ public class CustomerMgmt {
 
         PreparedStatement sm = conn.prepareStatement(query);
         sm.executeUpdate();
-        Customer newCustomer = new Customer(customer.getCustName());
-        allCustomers.add(newCustomer);
+        //Customer newCustomer = new Customer(customer.getCustName());
+
+        allCustomers.add(customer);
     }
 
     public static ObservableList<Customer> getCustomers() {
@@ -41,10 +42,18 @@ public class CustomerMgmt {
             ResultSet rs = sm.executeQuery(query);
             while (rs.next()) {
                 String customerName = rs.getString("Customer_Name");
+                String address = rs.getString("Address");
+                String zip = rs.getString("Postal_Code");
+                String div = rs.getString("Division_ID");
+                String phone = rs.getString("Phone");
                 int id = rs.getInt("Customer_ID");
                 Customer newCustomer = new Customer(customerName);
                 newCustomer.setCustID(id);
                 newCustomer.setCustName(customerName);
+                newCustomer.setCustDiv(div);
+                newCustomer.setCustZip(zip);
+                newCustomer.setCustAddress(address);
+                newCustomer.setCustPhone(phone);
 
 
                 allCustomers.add(newCustomer);

@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -78,6 +79,10 @@ public class LoginController implements Initializable {
                 return Boolean.TRUE;
             }
             else{
+                Alert newAlert = new Alert(Alert.AlertType.ERROR);
+                newAlert.setContentText("Invalid Login Credentials");
+                newAlert.showAndWait();
+
                 return Boolean.FALSE;
             }
         } catch (SQLException e) {

@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
+
 public class MainFormController implements Initializable{
     @FXML
     public TableView<Customer> customerView;
@@ -30,8 +31,11 @@ public class MainFormController implements Initializable{
     public TableColumn<Customer, Integer> customerID;
     @FXML
     public Button addCust;
+    @FXML
+    public Button updateCust;
     public static ObservableList<Customer> customers = FXCollections.observableArrayList();
     LocalDateTime time = LocalDateTime.now();
+    private static Customer updateCustomer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -45,6 +49,25 @@ public class MainFormController implements Initializable{
             System.out.println(customer.getCustName());
         }
         customerView.setItems(CustomerMgmt.allCustomers);
+
+        updateCust.setOnAction(e -> {
+            updateCustomer = customerView.getSelectionModel().getSelectedItem();
+
+
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("../Views/UpdateCustomer.fxml"));
+
+                Stage stage = new Stage();
+                Scene scene = new Scene(root);
+
+                stage.setTitle("Update Customer");
+                stage.setScene(scene);
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
 
         addCust.setOnAction(e -> {
             try {
@@ -65,7 +88,9 @@ public class MainFormController implements Initializable{
 
     }
 
-
+    public static Customer getCustomer(){
+        return updateCustomer;
+    }
 
 
 }

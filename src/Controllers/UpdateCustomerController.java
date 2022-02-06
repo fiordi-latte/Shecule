@@ -1,29 +1,26 @@
 package Controllers;
+
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.stage.Modality;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Country;
 import model.Customer;
 import model.Division;
-import model.JDBC;
 import util.CountryMgmt;
 import util.CustomerMgmt;
 import util.DivisionMgmt;
 import util.ErrorCheck;
 
-
-import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-public class AddCustomerController implements Initializable {
+public class UpdateCustomerController implements Initializable {
     @FXML
     public TextField customerNameInput;
     public TextField customerPhoneInput;
@@ -33,13 +30,22 @@ public class AddCustomerController implements Initializable {
     public ComboBox<String> customerStateInput;
     public Button saveButton;
     public Button cancelButton;
-    private static String selectedCountryString;
-    private Object selectedCountry;
     public String selectedDivision;
     LocalDateTime time = LocalDateTime.now();
-    int selectedIndex;
+    Customer updateCustomer;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        updateCustomer = MainFormController.getCustomer();
+        customerNameInput.setText(updateCustomer.getCustName());
+        customerPhoneInput.setText(updateCustomer.getCustPhone());
+        customerAddressInput.setText(updateCustomer.getCustAdress());
+        customerZipCodeInput.setText(updateCustomer.getCustZip());
+
+        customerCountryInput.getSelectionModel().select(updateCustomer.getCustCid());
+        customerStateInput.getSelectionModel().select(updateCustomer.getCustDiv());
+
 
         for(Country country : CountryMgmt.getCountryList()){
             customerCountryInput.getItems().add(country.getName());
@@ -52,13 +58,12 @@ public class AddCustomerController implements Initializable {
             customerStateInput.getSelectionModel().clearSelection();
             customerStateInput.getItems().clear();
 
-            selectedIndex = customerCountryInput.getSelectionModel().getSelectedIndex();
+            int selectedIndex = customerCountryInput.getSelectionModel().getSelectedIndex();
             System.out.println(selectedIndex);
             int cid = 0;
             if (selectedIndex == 0) {
 
                 cid = 1;
-
             }
             else if (selectedIndex == 1) {
 
@@ -76,7 +81,7 @@ public class AddCustomerController implements Initializable {
         });
 
         customerStateInput.setOnAction(e->{
-           selectedDivision = customerStateInput.getValue();
+            selectedDivision = customerStateInput.getValue();
 
         });
 
@@ -98,39 +103,37 @@ public class AddCustomerController implements Initializable {
 
 
 
-                String name = customerNameInput.getText();
-                String address = customerAddressInput.getText();
-                String phone = customerPhoneInput.getText();
-                String zip = customerZipCodeInput.getText();
-               // String divisionID = selectedDivision;
-                int divID = DivisionMgmt.getDivisionID(selectedDivision);
+            String name = customerNameInput.getText();
+            String address = customerAddressInput.getText();
+            String phone = customerPhoneInput.getText();
+            String zip = customerZipCodeInput.getText();
+            String divisionID = selectedDivision;
 
-                if(ErrorCheck.isEmpty(name) || ErrorCheck.isEmpty(address) || ErrorCheck.isEmpty(phone) || ErrorCheck.isEmpty(zip)){
-                    Alert newAlert = new Alert(Alert.AlertType.ERROR);
-                    newAlert.setContentText("Fill all required fields");
-                    newAlert.showAndWait();
-                }
+            if(ErrorCheck.isEmpty(name) || ErrorCheck.isEmpty(address) || ErrorCheck.isEmpty(phone) || ErrorCheck.isEmpty(zip) || ErrorCheck.isEmpty(divisionID)){
+                Alert newAlert = new Alert(Alert.AlertType.ERROR);
+                newAlert.setContentText("Fill all required fields");
+                newAlert.showAndWait();
+            }
 
-                if(!ErrorCheck.isInt(zip) || !ErrorCheck.isInt(phone)){
-                    Alert newAlert = new Alert(Alert.AlertType.ERROR);
-                    newAlert.setContentText("Please enter only numbers in the phone and zip code fields");
-                    newAlert.showAndWait();
-                }
+            if(!ErrorCheck.isInt(zip) || !ErrorCheck.isInt(phone)){
+                Alert newAlert = new Alert(Alert.AlertType.ERROR);
+                newAlert.setContentText("Please enter only numbers in the phone and zip code fields");
+                newAlert.showAndWait();
+            }
 
-                Customer newCustomer = new Customer(name);
-                newCustomer.setCustID(id);
-                newCustomer.setCustAddress(address);
-                newCustomer.setCustDiv(String.valueOf(divID));
-                newCustomer.setCustPhone(phone);
-                newCustomer.setCreateTime(time);
-                newCustomer.setLastUpdate(time);
-                newCustomer.setCustZip(zip);
-                newCustomer.setCustCid(selectedIndex);
-                try {
-                    CustomerMgmt.addCustomer(newCustomer);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+            Customer newCustomer = new Customer(name);
+            newCustomer.setCustID(id);
+            newCustomer.setCustAddress(address);
+            newCustomer.setCustDiv(divisionID);
+            newCustomer.setCustPhone(phone);
+            newCustomer.setCreateTime(time);
+            newCustomer.setLastUpdate(time);
+            newCustomer.setCustZip(zip);
+            try {
+                CustomerMgmt.addCustomer(newCustomer);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
 
 
 
@@ -146,4 +149,5 @@ public class AddCustomerController implements Initializable {
         invalidIput.showAndWait();
 
     }
-}
+ }
+
