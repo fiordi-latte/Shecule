@@ -43,12 +43,7 @@ public class MainFormController implements Initializable{
         DivisionMgmt.setDivisions();
         CustomerMgmt.getCustomers();
         //customerID.setCellValueFactory(new PropertyValueFactory<>("custId"));
-        customerName.setCellValueFactory(new PropertyValueFactory<>("custName"));
-        //System.out.println(customers);
-        for(Customer customer : CustomerMgmt.allCustomers){
-            System.out.println(customer.getCustName());
-        }
-        customerView.setItems(CustomerMgmt.allCustomers);
+
 
         updateCust.setOnAction(e -> {
             updateCustomer = customerView.getSelectionModel().getSelectedItem();
@@ -84,6 +79,13 @@ public class MainFormController implements Initializable{
                 ex.printStackTrace();
             }
         });
+
+        customerName.setCellValueFactory(new PropertyValueFactory<>("custName"));
+        //System.out.println(customers);
+        for(Customer customer : CustomerMgmt.allCustomers){
+            System.out.println(customer.getCustName());
+        }
+        customerView.setItems(CustomerMgmt.allCustomers);
 
 
     }

@@ -36,6 +36,7 @@ public class UpdateCustomerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+       // int id = CustomerMgmt.getCustomerID(name);
 
         updateCustomer = MainFormController.getCustomer();
         customerNameInput.setText(updateCustomer.getCustName());
@@ -50,11 +51,18 @@ public class UpdateCustomerController implements Initializable {
         /**
          * Get the name of the selected customers division
          */
-        String divisionName = DivisionMgmt.getDivisionName(Integer.parseInt(updateCustomer.getCustDiv()));
-        //System.out.println(divisionName);
-        DivisionMgmt.getDivisionName(Integer.parseInt(updateCustomer.getCustDiv()));
-        customerStateInput.getSelectionModel().select(DivisionMgmt.getDivisionName(Integer.parseInt(updateCustomer.getCustDiv())));
-        selectedDivision = divisionName;
+        System.out.println(updateCustomer.getCustDiv());
+        try {
+            String divisionName = DivisionMgmt.getDivisionName(Integer.parseInt(updateCustomer.getCustDiv()));
+            //System.out.println(divisionName);
+            DivisionMgmt.getDivisionName(Integer.parseInt(updateCustomer.getCustDiv()));
+            customerStateInput.getSelectionModel().select(DivisionMgmt.getDivisionName(Integer.parseInt(updateCustomer.getCustDiv())));
+            selectedDivision = divisionName;
+        }
+        catch (Exception e){
+            System.out.print("HERE");
+            System.out.println(updateCustomer.getCustDiv());
+        }
 
         /**
          * get country ID from division
@@ -67,6 +75,14 @@ public class UpdateCustomerController implements Initializable {
         for(Country country : CountryMgmt.getCountryList()){
             customerCountryInput.getItems().add(country.getName());
         }
+
+        String custName = customerNameInput.getText();
+        Customer newCustomer = new Customer(custName);
+        int id = CustomerMgmt.getCustomerID(custName);
+
+        System.out.println(id);
+        //if(id != null){
+        newCustomer.setCustID(id);
 
         /**
          * Handles clicking on the country combobox and sets division combobox appropriately
@@ -129,6 +145,7 @@ public class UpdateCustomerController implements Initializable {
             String phone = customerPhoneInput.getText();
             String zip = customerZipCodeInput.getText();
             String divisionID = selectedDivision;
+            String divID = String.valueOf(DivisionMgmt.getDivisionID(divisionID));
 
             if(ErrorCheck.isEmpty(name) || ErrorCheck.isEmpty(address) || ErrorCheck.isEmpty(phone) || ErrorCheck.isEmpty(zip) || ErrorCheck.isEmpty(divisionID)){
                 Alert newAlert = new Alert(Alert.AlertType.ERROR);
@@ -141,17 +158,19 @@ public class UpdateCustomerController implements Initializable {
                 newAlert.setContentText("Please enter only numbers in the phone and zip code fields");
                 newAlert.showAndWait();
             }
+           // System.out.println(name);
 
-            Customer newCustomer = new Customer(name);
-            //newCustomer.setCustID(id);
+
+            //}
+            newCustomer.setCustName(name);
             newCustomer.setCustAddress(address);
-            newCustomer.setCustDiv(divisionID);
+            newCustomer.setCustDiv(divID);
             newCustomer.setCustPhone(phone);
             newCustomer.setCreateTime(time);
             newCustomer.setLastUpdate(time);
             newCustomer.setCustZip(zip);
             try {
-                CustomerMgmt.addCustomer(newCustomer);
+                CustomerMgmt.updateCustomer(newCustomer);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

@@ -7,9 +7,10 @@ import model.JDBC;
 import model.User;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 
 public class CustomerMgmt {
-
+    public static LocalDateTime now = LocalDateTime.now();
     Statement sm = null;
     private static final Connection conn = JDBC.getConnection();
     public static final ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
@@ -32,6 +33,30 @@ public class CustomerMgmt {
         //Customer newCustomer = new Customer(customer.getCustName());
 
         allCustomers.add(customer);
+    }
+
+    public static void updateCustomer(Customer customer) throws SQLException {
+        //System.out.println(customer.getCustID());
+        User newUser = new User();
+        newUser.setUserName("admin");
+       // int divID = DivisionMgmt.getDivisionID(customer.getCustDiv());
+        String query = "UPDATE customers set Customer_Name = '" +customer.getCustName()+"', Address = '" + customer.getCustAdress() + "', Postal_Code = '" + customer.getCustZip() + "', Phone = '" +customer.getCustPhone()+ "', Last_Update = '"
+                 + now +"', Last_Updated_By = '"+ newUser.getUserName() +"', Division_ID = '" + customer.getCustDiv() + "' WHERE Customer_ID = '" + customer.getCustID() + "'";
+        PreparedStatement sm = conn.prepareStatement(query);
+        sm.executeUpdate(query);
+        System.out.println(customer.getCustID());
+        int i = customer.getCustID() - 1;
+        System.out.println(i);
+        allCustomers.set(i, customer);
+    }
+
+    public static int getCustomerID(String name){
+        for(Customer customer : allCustomers){
+            if(customer.getCustName().equals(name)){
+                return customer.getCustID();
+            }
+        }
+        return 0;
     }
 
     public static ObservableList<Customer> getCustomers() {
