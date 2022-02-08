@@ -14,40 +14,38 @@ public class CustomerMgmt {
     Statement sm = null;
     private static final Connection conn = JDBC.getConnection();
     public static final ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
-    public static ObservableList<User> currentUser = FXCollections.observableArrayList();
     public static ObservableList<Customer> getAllCustomers( ) {
         return allCustomers;
     }
 
     public static void addCustomer(Customer customer) throws SQLException {
-        //currentUser = User.getUsers();
-        User newUser = new User();
-        newUser.setUserName("admin");
-
-        //TODO fix username
         String query = "INSERT INTO customers VALUES ('"+customer.getCustID()+"', '"+customer.getCustName()+"', '" + customer.getCustAdress() + "', '" + customer.getCustZip() + "','" +customer.getCustPhone()+ "', '"
-        + customer.getCustCreateTime() + "',' "+ newUser.getUserName() +"' ,'" + customer.getLastUpdate() +"', '"+ newUser.getUserName() +"', '" + customer.getCustDiv() + "')";
+        + now + "',' "+ User.getCurrentUser() +"' ,'" + now +"', '"+ User.getCurrentUser() +"', '" + customer.getCustDiv() + "')";
 
         PreparedStatement sm = conn.prepareStatement(query);
         sm.executeUpdate();
-        //Customer newCustomer = new Customer(customer.getCustName());
+
 
         allCustomers.add(customer);
     }
 
     public static void updateCustomer(Customer customer) throws SQLException {
-        //System.out.println(customer.getCustID());
-        User newUser = new User();
-        newUser.setUserName("admin");
-       // int divID = DivisionMgmt.getDivisionID(customer.getCustDiv());
         String query = "UPDATE customers set Customer_Name = '" +customer.getCustName()+"', Address = '" + customer.getCustAdress() + "', Postal_Code = '" + customer.getCustZip() + "', Phone = '" +customer.getCustPhone()+ "', Last_Update = '"
-                 + now +"', Last_Updated_By = '"+ newUser.getUserName() +"', Division_ID = '" + customer.getCustDiv() + "' WHERE Customer_ID = '" + customer.getCustID() + "'";
+                 + now +"', Last_Updated_By = '"+ User.getCurrentUser() +"', Division_ID = '" + customer.getCustDiv() + "' WHERE Customer_ID = '" + customer.getCustID() + "'";
         PreparedStatement sm = conn.prepareStatement(query);
         sm.executeUpdate(query);
         System.out.println(customer.getCustID());
-        int i = customer.getCustID() - 1;
-        System.out.println(i);
+        int i = allCustomers.indexOf(customer);
+
         allCustomers.set(i, customer);
+    }
+
+    public static void deleteCustomer(Customer customer) throws SQLException {
+        String query = "DELETE FROM customers where Customer_ID = '" + customer.getCustID() + "'";
+        PreparedStatement sm = conn.prepareStatement(query);
+        sm.executeUpdate(query);
+        int i = allCustomers.indexOf(customer);
+        allCustomers.remove(i);
     }
 
     public static int getCustomerID(String name){

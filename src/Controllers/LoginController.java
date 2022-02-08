@@ -33,6 +33,7 @@ public class LoginController implements Initializable {
 
     Statement sm = null;
     private static final Connection conn = JDBC.getConnection();
+    public static User currentUser;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -43,7 +44,7 @@ public class LoginController implements Initializable {
             String password = passwordInput.getText();
 
             if(verifyLogin(userName, password)){
-
+                User.setCurrentUser(userNameInput.getText());
 
 
                 try {

@@ -17,6 +17,7 @@ import util.DivisionMgmt;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
@@ -33,6 +34,7 @@ public class MainFormController implements Initializable{
     public Button addCust;
     @FXML
     public Button updateCust;
+    public Button deleteCust;
     public static ObservableList<Customer> customers = FXCollections.observableArrayList();
     LocalDateTime time = LocalDateTime.now();
     private static Customer updateCustomer;
@@ -62,6 +64,22 @@ public class MainFormController implements Initializable{
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+        });
+
+        deleteCust.setOnAction(e -> {
+            updateCustomer = customerView.getSelectionModel().getSelectedItem();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Are you sure you want to delete?");
+            alert.showAndWait().ifPresent(response -> {
+                if(response == ButtonType.OK) {
+
+                    try {
+                        CustomerMgmt.deleteCustomer(updateCustomer);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
         });
 
         addCust.setOnAction(e -> {

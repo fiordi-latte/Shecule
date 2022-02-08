@@ -33,6 +33,7 @@ public class UpdateCustomerController implements Initializable {
     public String selectedDivision;
     LocalDateTime time = LocalDateTime.now();
     Customer updateCustomer;
+    public int selectedIndex;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -81,17 +82,41 @@ public class UpdateCustomerController implements Initializable {
         int id = CustomerMgmt.getCustomerID(custName);
 
         System.out.println(id);
-        //if(id != null){
+
         newCustomer.setCustID(id);
 
         /**
+         * auto-populate state/provence combobox based on already selected option
+         */
+        selectedIndex = customerCountryInput.getSelectionModel().getSelectedIndex();
+        System.out.println(selectedIndex);
+        int newID = 0;
+        if (selectedIndex == 0) {
+
+            newID = 1;
+        }
+        else if (selectedIndex == 1) {
+
+            newID = 2;
+        }
+        else if (selectedIndex == 2) {
+
+            newID = 3;
+        }
+        for (Division division : DivisionMgmt.getDivisions()) {
+            if (division.getCountryID() == newID) {
+                customerStateInput.getItems().add(division.getName());
+            }
+        }
+        /**
          * Handles clicking on the country combobox and sets division combobox appropriately
          */
+
         customerCountryInput.setOnAction(e -> {
             customerStateInput.getSelectionModel().clearSelection();
             customerStateInput.getItems().clear();
 
-            int selectedIndex = customerCountryInput.getSelectionModel().getSelectedIndex();
+            selectedIndex = customerCountryInput.getSelectionModel().getSelectedIndex();
             System.out.println(selectedIndex);
             int cid = 0;
             if (selectedIndex == 0) {
@@ -126,20 +151,6 @@ public class UpdateCustomerController implements Initializable {
         });
 
         saveButton.setOnAction(e -> {
-            /**
-             *
-             *
-            int id;
-            if(CustomerMgmt.getAllCustomers().isEmpty()){
-                id = 0;
-            }
-            else {
-                id = CustomerMgmt.getAllCustomers().size() + 1;
-            }
-            */
-
-
-
             String name = customerNameInput.getText();
             String address = customerAddressInput.getText();
             String phone = customerPhoneInput.getText();
@@ -158,10 +169,7 @@ public class UpdateCustomerController implements Initializable {
                 newAlert.setContentText("Please enter only numbers in the phone and zip code fields");
                 newAlert.showAndWait();
             }
-           // System.out.println(name);
 
-
-            //}
             newCustomer.setCustName(name);
             newCustomer.setCustAddress(address);
             newCustomer.setCustDiv(divID);

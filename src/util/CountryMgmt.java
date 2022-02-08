@@ -17,6 +17,7 @@ public class CountryMgmt {
     public static ObservableList<Country> countries = FXCollections.observableArrayList();
     public static ObservableList<Country> getCountryList(){
         return countries;
+
     }
 
     public static String getCountryName(int id){
