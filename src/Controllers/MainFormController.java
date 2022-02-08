@@ -47,6 +47,7 @@ public class MainFormController implements Initializable{
         CountryMgmt.setCountries();
         DivisionMgmt.setDivisions();
         CustomerMgmt.getCustomers();
+
         //customerID.setCellValueFactory(new PropertyValueFactory<>("custId"));
 
         appointments.setOnAction(e-> {
@@ -118,9 +119,13 @@ public class MainFormController implements Initializable{
 
         customerName.setCellValueFactory(new PropertyValueFactory<>("custName"));
         //System.out.println(customers);
+        /**
+         *
+
         for(Customer customer : CustomerMgmt.allCustomers){
             System.out.println(customer.getCustName());
         }
+         */
         customerView.setItems(CustomerMgmt.allCustomers);
 
 

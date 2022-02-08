@@ -5,12 +5,13 @@ import java.time.LocalDateTime;
 
 public class Appointment {
 
-    private int id;
+    private String id;
     private String title;
     private String location;
     private String type;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private String description;
+    private String startTime;
+    private String endTime;
     private LocalDateTime createTime;
     private String createdBy;
     private LocalDateTime updateTime;
@@ -21,12 +22,21 @@ public class Appointment {
 
     public Appointment(){}
 
-    public void setID(int id){
+    public void setID(String id){
+
         this.id = id;
     }
 
-    public int getID(){
+    public String getId(){
         return id;
+    }
+
+    public void setDescription(String description){
+        this.description = description;
+    }
+
+    public String getDescription(){
+        return description;
     }
 
     public void setTitle(String title){
@@ -53,19 +63,19 @@ public class Appointment {
         return type;
     }
 
-    public void setStartTime(LocalDateTime startTime){
+    public void setStartTime(String startTime){
         this.startTime = startTime;
     }
 
-    public LocalDateTime getStartTime(){
+    public String getStartTime(){
         return startTime;
     }
 
-    public void setEndTime(LocalDateTime endTime){
+    public void setEndTime(String endTime){
         this.endTime = endTime;
     }
 
-    public LocalDateTime getEndTime(){
+    public String getEndTime(){
         return endTime;
     }
 
