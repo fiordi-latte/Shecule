@@ -1,14 +1,20 @@
 package Controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Appointment;
 import util.AppointmentMgmt;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -62,7 +68,19 @@ public class AppointmentController implements Initializable {
         appointmentView.setItems(AppointmentMgmt.getAppointments());
 
         add.setOnAction(e -> {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("../Views/AddAppointmentForm.fxml"));
 
+                Stage stage = new Stage();
+                Scene scene = new Scene(root);
+
+                stage.setTitle("Add Appointment");
+                stage.setScene(scene);
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
 
         update.setOnAction(e -> {

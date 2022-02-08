@@ -10,8 +10,8 @@ public class Appointment {
     private String location;
     private String type;
     private String description;
-    private String startTime;
-    private String endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private LocalDateTime createTime;
     private String createdBy;
     private LocalDateTime updateTime;
@@ -63,19 +63,19 @@ public class Appointment {
         return type;
     }
 
-    public void setStartTime(String startTime){
+    public void setStartTime(LocalDateTime startTime){
         this.startTime = startTime;
     }
 
-    public String getStartTime(){
+    public LocalDateTime getStartTime(){
         return startTime;
     }
 
-    public void setEndTime(String endTime){
+    public void setEndTime(LocalDateTime endTime){
         this.endTime = endTime;
     }
 
-    public String getEndTime(){
+    public LocalDateTime getEndTime(){
         return endTime;
     }
 
