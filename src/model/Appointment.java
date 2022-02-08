@@ -15,9 +15,9 @@ public class Appointment {
     private String createdBy;
     private LocalDateTime updateTime;
     private String updatedBy;
-    private int cid;
-    private int uid;
-    private int contactID;
+    private String cid;
+    private String uid;
+    private String contactID;
 
     public Appointment(){}
 
@@ -85,27 +85,27 @@ public class Appointment {
         this.updateTime = updateTime;
     }
 
-    public void setCid(int cid){
+    public void setCid(String cid){
         this.cid = cid;
     }
 
-    public int getCid(){
+    public String getCid(){
         return cid;
     }
 
-    public void setUid(int uid){
+    public void setUid(String uid){
         this.uid = uid;
     }
 
-    public int getUid(){
+    public String getUid(){
         return uid;
     }
 
-    public void setContactID(int contactID){
+    public void setContactID(String contactID){
         this.contactID = contactID;
     }
 
-    public int getContactID(){
+    public String getContactID(){
         return contactID;
     }
 

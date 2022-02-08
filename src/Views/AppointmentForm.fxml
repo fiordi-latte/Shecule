@@ -8,7 +8,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="516.0" prefWidth="1049.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="516.0" prefWidth="1049.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AppointmentController">
    <children>
       <DatePicker fx:id="datePicker" layoutX="770.0" layoutY="20.0" prefHeight="34.0" prefWidth="260.0" />
       <TableView fx:id="appointmentView" layoutX="14.0" layoutY="61.0" prefHeight="373.0" prefWidth="1016.0">
