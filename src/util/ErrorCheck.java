@@ -1,5 +1,7 @@
 package util;
 
+import javafx.scene.control.Alert;
+
 public class ErrorCheck {
 
     public static Boolean isEmpty(String s){
@@ -17,6 +19,14 @@ public class ErrorCheck {
         } catch(Exception e){
             return false;
         }
+    }
+
+    public static void displayError(String error){
+        Alert invalidIput = new Alert(Alert.AlertType.ERROR);
+        invalidIput.setTitle("ERROR");
+        invalidIput.setContentText(error);
+        invalidIput.showAndWait();
+
     }
 
 }

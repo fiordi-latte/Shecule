@@ -1,17 +1,16 @@
 package Controllers;
 
-import com.sun.media.jfxmedia.events.NewFrameEvent;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointment;
-import model.Contact;
 import model.User;
-import org.w3c.dom.Text;
-import util.*;
-
+import util.AppointmentMgmt;
+import util.ContactMgmt;
+import util.CustomerMgmt;
+import util.ErrorCheck;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -20,37 +19,36 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
 
-public class AddAppointmentController implements Initializable {
-    @FXML
-    public TextField appTitle;
-    @FXML
-    public TextField appDescription;
-    @FXML
-    public TextField appType;
-    @FXML
-    public TextField appLocation;
-    @FXML
-    public TextField appStartTime;
-    @FXML
-    public TextField appEndTime;
-    @FXML
-    public ComboBox<String> contact;
-    @FXML
-    public DatePicker datePicker;
-    @FXML
-    public Button save;
-    @FXML
-    public TextField customer;
-    @FXML
-    public Button cancel;
-    public ObservableList<String> contactNames;
-    private final DateTimeFormatter timePat = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
-    int uid;
+public class UpdateAppointmentController implements Initializable {
 
-
+        @FXML
+        public TextField appTitle;
+        @FXML
+        public TextField appDescription;
+        @FXML
+        public TextField appType;
+        @FXML
+        public TextField appLocation;
+        @FXML
+        public TextField appStartTime;
+        @FXML
+        public TextField appEndTime;
+        @FXML
+        public ComboBox<String> contact;
+        @FXML
+        public DatePicker datePicker;
+        @FXML
+        public Button save;
+        @FXML
+        public TextField customer;
+        @FXML
+        public Button cancel;
+        public ObservableList<String> contactNames;
+        private final DateTimeFormatter timePat = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
+        int uid;
+        public Appointment selectedApp;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         contact.setItems(ContactMgmt.getContactNames());
 
 
@@ -151,9 +149,5 @@ public class AddAppointmentController implements Initializable {
 
 
         });
-
-
-
-
     }
 }

@@ -109,12 +109,14 @@ public class AddCustomerController implements Initializable {
                     Alert newAlert = new Alert(Alert.AlertType.ERROR);
                     newAlert.setContentText("Fill all required fields");
                     newAlert.showAndWait();
+                    return;
                 }
 
                 if(!ErrorCheck.isInt(zip) || !ErrorCheck.isInt(phone)){
                     Alert newAlert = new Alert(Alert.AlertType.ERROR);
                     newAlert.setContentText("Please enter only numbers in the phone and zip code fields");
                     newAlert.showAndWait();
+                    return;
                 }
 
                 Customer newCustomer = new Customer(name);
@@ -139,11 +141,5 @@ public class AddCustomerController implements Initializable {
 
         });
     }
-    public void displayError(){
-        Alert invalidIput = new Alert(Alert.AlertType.ERROR);
-        invalidIput.setTitle("ERROR");
-        invalidIput.setContentText("Invalid Input, Please Retry");
-        invalidIput.showAndWait();
 
-    }
 }

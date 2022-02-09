@@ -101,7 +101,20 @@ public class AppointmentController implements Initializable {
         });
 
         update.setOnAction(e -> {
+            selectedAppointment = appointmentView.getSelectionModel().getSelectedItem();
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("../Views/UpdateAppointmentForm.fxml"));
 
+                Stage stage = new Stage();
+                Scene scene = new Scene(root);
+
+                stage.setTitle("Add Appointment");
+                stage.setScene(scene);
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
 
 
