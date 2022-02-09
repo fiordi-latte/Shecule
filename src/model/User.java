@@ -37,6 +37,9 @@ public class User {
     public void setUserID(int userID){
         this.userID = userID;
     }
+    public int getID(){
+     return userID;
+    }
 
     public boolean isCurrent(){
         this.isCurrent = true;
@@ -66,6 +69,16 @@ public class User {
 
     public static void setCurrentUser(String name){
      currentUser = name;
+    }
+
+    public static int getUserID(String name){
+        for(User user: users){
+            if(user.getUserName().equals(name)) {
+                return user.getID();
+            }
+        }
+
+        return 0;
     }
 
     public static String getCurrentUser(){

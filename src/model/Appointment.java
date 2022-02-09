@@ -2,32 +2,33 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public class Appointment {
 
-    private String id;
+    private int id;
     private String title;
     private String location;
     private String type;
     private String description;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private ZonedDateTime startTime;
+    private ZonedDateTime endTime;
     private LocalDateTime createTime;
     private String createdBy;
     private LocalDateTime updateTime;
     private String updatedBy;
-    private String cid;
-    private String uid;
-    private String contactID;
+    private int cid;
+    private int uid;
+    private int contactID;
 
     public Appointment(){}
 
-    public void setID(String id){
+    public void setID(int id){
 
         this.id = id;
     }
 
-    public String getId(){
+    public int getId(){
         return id;
     }
 
@@ -63,19 +64,19 @@ public class Appointment {
         return type;
     }
 
-    public void setStartTime(LocalDateTime startTime){
+    public void setStartTime(ZonedDateTime startTime){
         this.startTime = startTime;
     }
 
-    public LocalDateTime getStartTime(){
+    public ZonedDateTime getStartTime(){
         return startTime;
     }
 
-    public void setEndTime(LocalDateTime endTime){
+    public void setEndTime(ZonedDateTime endTime){
         this.endTime = endTime;
     }
 
-    public LocalDateTime getEndTime(){
+    public ZonedDateTime getEndTime(){
         return endTime;
     }
 
@@ -95,27 +96,27 @@ public class Appointment {
         this.updateTime = updateTime;
     }
 
-    public void setCid(String cid){
+    public void setCid(int cid){
         this.cid = cid;
     }
 
-    public String getCid(){
+    public int getCid(){
         return cid;
     }
 
-    public void setUid(String uid){
+    public void setUid(int uid){
         this.uid = uid;
     }
 
-    public String getUid(){
+    public int getUid(){
         return uid;
     }
 
-    public void setContactID(String contactID){
+    public void setContactID(int contactID){
         this.contactID = contactID;
     }
 
-    public String getContactID(){
+    public int getContactID(){
         return contactID;
     }
 

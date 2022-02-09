@@ -13,8 +13,8 @@
    <children>
       <AnchorPane prefHeight="623.0" prefWidth="600.0">
          <children>
-            <Button layoutX="94.0" layoutY="544.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="417.0" layoutY="557.0" mnemonicParsing="false" text="Button" />
+            <Button fx:id="save" layoutX="94.0" layoutY="544.0" mnemonicParsing="false" text="Save" />
+            <Button fx:id="cancel" layoutX="417.0" layoutY="557.0" mnemonicParsing="false" text="Cancel" />
             <TextField fx:id="appTitle" layoutX="237.0" layoutY="67.0" />
             <TextField fx:id="appDescription" layoutX="237.0" layoutY="110.0" />
             <TextField fx:id="appType" layoutX="237.0" layoutY="150.0" />
@@ -30,7 +30,7 @@
             <Label layoutX="90.0" layoutY="308.0" text="End Time" />
             <TextField fx:id="appEndTime" layoutX="237.0" layoutY="304.0" />
             <Label layoutX="90.0" layoutY="420.0" text="Location" />
-            <TextField fx:id="appLoaction" layoutX="237.0" layoutY="420.0" />
+            <TextField fx:id="appLocation" layoutX="237.0" layoutY="420.0" />
          </children>
       </AnchorPane>
    </children>

@@ -10,6 +10,7 @@ import model.User;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 public class AppointmentMgmt {
 
@@ -23,15 +24,23 @@ public class AppointmentMgmt {
     }
 
     public static void addAppointment(Appointment appointment) throws SQLException {
-        String query = "INSERT INTO customers VALUES ('"+appointment.getId()+"', '"+appointment.getTitle()+"', '" + appointment.getDescription() + "', '" + appointment.getLocation() + "','" +appointment.getType()+ "', '"
-                + Timestamp.valueOf(appointment.getStartTime()) + "',' "+ Timestamp.valueOf(appointment.getEndTime()) +"' ,'" + now +"', '"+ User.getCurrentUser() +"', '" + now + "','"  + User.getCurrentUser() + "','" + appointment.getCid() +"','" + appointment.getUid() + "','" + appointment.getContactID() +"')";
+        LocalDateTime start = LocalDateTime.from(appointment.getStartTime());
+        LocalDateTime end = LocalDateTime.from(appointment.getEndTime());
+        String currentUser = User.getCurrentUser();
 
+        String query = "INSERT INTO appointments VALUES ('"+appointment.getId()+"', '"+appointment.getTitle()+"', '" + appointment.getDescription() + "', '" + appointment.getLocation() + "','" +appointment.getType()+ "', '"
+                + Timestamp.valueOf(start) + "',' "+ Timestamp.valueOf(end) +"' ,'" + now +"', '"+ User.getCurrentUser() +"', '" + now + "','"  + User.getCurrentUser() + "','" + appointment.getCid() +"','" + appointment.getUid() + "','" + appointment.getContactID() +"')";
+        /**
+        String query = "INSERT INTO appointments VALUES ('"+appointment.getId()+"', '"+appointment.getTitle()+"', '" + appointment.getDescription() + "', '" + appointment.getLocation() + "','" +appointment.getType()+ "', '"
+                + now + "',' "+ now +"' ,'" + now +"', '"+ User.getCurrentUser() +"', '" + now + "','"  + User.getCurrentUser() + "','" + appointment.getCid() +"','" + appointment.getUid() + "','" + appointment.getContactID() +"')";
+*/
         PreparedStatement sm = conn.prepareStatement(query);
         sm.executeUpdate();
 
 
         appointments.add(appointment);
     }
+
 
     public static void setAppointments() {
         try {
@@ -45,14 +54,14 @@ public class AppointmentMgmt {
                 String type = rs.getString("Type");
                 Timestamp start = rs.getTimestamp("Start");
                 Timestamp end = rs.getTimestamp("End");
-                String cid = rs.getString("Customer_ID");
-                String uid = rs.getString("User_ID");
-                String contactID = rs.getString("Contact_ID");
+                int cid = rs.getInt("Customer_ID");
+                int uid = rs.getInt("User_ID");
+                int contactID = rs.getInt("Contact_ID");
                 String location = rs.getString("Location");
-                String id = rs.getString("Appointment_ID");
+                int id = rs.getInt("Appointment_ID");
 
-                LocalDateTime startTime = start.toLocalDateTime();
-                LocalDateTime endTime = end.toLocalDateTime();
+                ZonedDateTime startTime = start.toLocalDateTime().atZone(ZoneId.systemDefault());
+                ZonedDateTime endTime = end.toLocalDateTime().atZone(ZoneId.systemDefault());
 
                 Appointment newAppointment = new Appointment();
                 newAppointment.setID(id);
