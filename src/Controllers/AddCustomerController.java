@@ -93,7 +93,7 @@ public class AddCustomerController implements Initializable {
                 id = 0;
             }
             else {
-                id = CustomerMgmt.getAllCustomers().size() + 1;
+                id = CustomerMgmt.getAllCustomers().get(CustomerMgmt.getAllCustomers().size() - 1).getCustID() + 1;
             }
 
 

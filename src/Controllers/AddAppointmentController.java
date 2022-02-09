@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import model.Appointment;
 import model.Contact;
 import model.User;
@@ -45,33 +46,37 @@ public class AddAppointmentController implements Initializable {
     @FXML
     public Button save;
     @FXML
+    public TextField customer;
+    @FXML
     public Button cancel;
     public ObservableList<String> contactNames;
     private final DateTimeFormatter timePat = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
     int uid;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //System.out.println(User.getCurrentUser());
+
         contact.setItems(ContactMgmt.getContactNames());
-        /**
-        if(User.getCurrentUser().equals("admin")) {
-             uid = 1;
-        }
-        else if(User.getCurrentUser().equals("test")){
-             uid = 2;
-        }
-        */
+
+
 
         uid = User.getUserID(User.getCurrentUser());
 
         System.out.println(uid);
+
+        cancel.setOnAction(e->{
+            Stage stage = (Stage) cancel.getScene().getWindow();
+            stage.close();
+        });
+
         save.setOnAction(e->{
             int id;
             if(AppointmentMgmt.getAppointments().isEmpty()){
                 id = 0;
             }
             else {
-                id = AppointmentMgmt.getAppointments().size() + 1;
+                //Appointment appointment = AppointmentMgmt.getAppointments().get(-1);
+                id = AppointmentMgmt.getAppointments().get(AppointmentMgmt.getAppointments().size() - 1).getId() + 1;
+                //id = appointment.getId();
             }
             String title = appTitle.getText();
             String description = appDescription.getText();
@@ -81,9 +86,11 @@ public class AddAppointmentController implements Initializable {
             String end = appEndTime.getText();
             LocalDate date = datePicker.getValue();
             String contactName = contact.getValue();
+            String customerName = customer.getText();
 
             int contactID = ContactMgmt.getContactID(contactName);
-            int customerID = CustomerMgmt.getCustomerID(customer);
+            int customerID = CustomerMgmt.getCustomerID(customerName);
+
 
             LocalDateTime startLT = LocalDateTime.of(date, LocalTime.parse(start));
 
@@ -101,13 +108,16 @@ public class AddAppointmentController implements Initializable {
             newAppointment.setContactID(contactID);
             newAppointment.setStartTime(startTime);
             newAppointment.setEndTime(endTime);
-            //newAppointment.setCreatedBy();
+
 
             try {
                 AppointmentMgmt.addAppointment(newAppointment);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
+
+            Stage stage = (Stage) save.getScene().getWindow();
+            stage.close();
 
 
         });

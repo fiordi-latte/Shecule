@@ -41,6 +41,14 @@ public class AppointmentMgmt {
         appointments.add(appointment);
     }
 
+    public static void deleteAppointment(Appointment appointment) throws SQLException {
+        String query = "DELETE FROM appointments where Appointment_ID = '" + appointment.getId() + "'";
+        PreparedStatement sm = conn.prepareStatement(query);
+        sm.executeUpdate(query);
+        int i = appointments.indexOf(appointment);
+        appointments.remove(i);
+    }
+
 
     public static void setAppointments() {
         try {

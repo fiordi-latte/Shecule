@@ -5,17 +5,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Appointment;
 import util.AppointmentMgmt;
+import util.CustomerMgmt;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AppointmentController implements Initializable {
@@ -48,7 +48,7 @@ public class AppointmentController implements Initializable {
     public Button update;
     @FXML
     public Button delete;
-
+    public static Appointment selectedAppointment;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -66,6 +66,23 @@ public class AppointmentController implements Initializable {
         userID.setCellValueFactory(new PropertyValueFactory<>("uid"));
 
         appointmentView.setItems(AppointmentMgmt.getAppointments());
+
+        delete.setOnAction(e->{
+            selectedAppointment = appointmentView.getSelectionModel().getSelectedItem();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Are you sure you want to delete?");
+            alert.showAndWait().ifPresent(response -> {
+                if(response == ButtonType.OK) {
+
+                    try {
+                        AppointmentMgmt.deleteAppointment(selectedAppointment);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+
+        });
 
         add.setOnAction(e -> {
             try {
@@ -87,8 +104,6 @@ public class AppointmentController implements Initializable {
 
         });
 
-        delete.setOnAction(e -> {
 
-        });
     }
 }
