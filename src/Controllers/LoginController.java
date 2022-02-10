@@ -10,13 +10,21 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import jdk.dynalink.StandardOperation;
 import model.JDBC;
 import model.User;
 
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -45,6 +53,13 @@ public class LoginController implements Initializable {
 
             if(verifyLogin(userName, password)){
                 User.setCurrentUser(userNameInput.getText());
+                String toWrite = "Successful login by '"+ User.getCurrentUser() +"' at '" + LocalDateTime.now() +"'";
+                Path file = Paths.get("login-activity.txt");
+                try {
+                    Files.write(file, Collections.singleton(toWrite), StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
 
 
                 try {
@@ -76,10 +91,11 @@ public class LoginController implements Initializable {
                 String user = rs.getString("User_Name");
                 User.setUsers();
 
-                System.out.println(user);
                 return Boolean.TRUE;
             }
             else{
+                String toWrite = "Unsuccessful login by '"+ userName +"' at '" + LocalDateTime.now() +"'";Path file = Paths.get("login-activity.txt");try {    Files.write(file, Collections.singleton(toWrite), StandardCharsets.UTF_8, StandardOpenOption.APPEND);} catch (IOException ex) {    ex.printStackTrace();}
+
                 Alert newAlert = new Alert(Alert.AlertType.ERROR);
                 newAlert.setContentText("Invalid Login Credentials");
                 newAlert.showAndWait();

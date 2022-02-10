@@ -6,52 +6,52 @@ import java.time.ZonedDateTime;
 public class ContactReport {
     private int customerID;
     private int appID;
-    private String description;
-    private String type;
+    private String appDescription;
+    private String appType;
     private String location;
-    private ZonedDateTime start;
-    private ZonedDateTime end;
-    private String title;
+    private ZonedDateTime appStart;
+    private ZonedDateTime appEnd;
+    private String appTitle;
 
     public ContactReport(){}
 
-    public void setTitle(String title){
-        this.title = title;
+    public void setAppTitle(String title){
+        this.appTitle = title;
     }
 
-    public String getTitle(){
-        return title;
+    public String getAppTitle(){
+        return appTitle;
     }
 
-    public void setCustomerID(int id){
+    public void setCustomerId(int id){
         this.customerID = id;
     }
-    public int getCustomerID(){
+    public int getCustomerId(){
         return customerID;
     }
 
-    public void setAppID(int id){
+    public void setAppId(int id){
         this.appID = id;
     }
 
-    public int getAppID(){
+    public int getAppId(){
         return appID;
     }
 
-    public void setDescription(String desc){
-        this.description = desc;
+    public void setAppDescription(String desc){
+        this.appDescription = desc;
     }
 
-    public String getDescription(){
-        return description;
+    public String getAppDescription(){
+        return appDescription;
     }
 
     public void setAppType(String type){
-        this.type = type;
+        this.appType = type;
     }
 
     public String getAppType(){
-        return type;
+        return appType;
     }
 
     public void setLocation(String location){
@@ -61,19 +61,19 @@ public class ContactReport {
     public String getLocation(){
         return location;
     }
-    public void setStart(ZonedDateTime start){
-        this.start = start;
+    public void setAppStart(ZonedDateTime start){
+        this.appStart = start;
     }
 
-    public ZonedDateTime getStart(){
-        return start;
+    public ZonedDateTime getAppStart(){
+        return appStart;
     }
 
-    public void setEnd(ZonedDateTime end){
-        this.end = end;
+    public void setAppEnd(ZonedDateTime end){
+        this.appEnd = end;
     }
 
-    public ZonedDateTime getEnd(){
-        return end;
+    public ZonedDateTime getAppEnd(){
+        return appEnd;
     }
 }

@@ -36,6 +36,8 @@ public class MainFormController implements Initializable{
     public Button appointments;
     @FXML
     public Button deleteCust;
+    @FXML
+    public Button reports;
     public static ObservableList<Customer> customers = FXCollections.observableArrayList();
     LocalDateTime time = LocalDateTime.now();
     private static Customer updateCustomer;
@@ -49,6 +51,21 @@ public class MainFormController implements Initializable{
         AppointmentMgmt.setAppointments();
 
         //customerID.setCellValueFactory(new PropertyValueFactory<>("custId"));
+        reports.setOnAction(e->{
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("../Views/ReportsForm.fxml"));
+
+                Stage stage = new Stage();
+                Scene scene = new Scene(root);
+
+                stage.setTitle("Reports");
+                stage.setScene(scene);
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
 
         appointments.setOnAction(e-> {
             try {

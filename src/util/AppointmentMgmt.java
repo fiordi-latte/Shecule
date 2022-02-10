@@ -64,7 +64,8 @@ public class AppointmentMgmt {
     }
 
     public static ObservableList<ContactReport> reportContacts(int contactID) throws SQLException {
-        String query = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID FROM appointments WHERE Contact_ID = '" + contactID;
+        report.clear();
+        String query = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID FROM appointments WHERE Contact_ID = '" + contactID + "'";
         PreparedStatement sm = conn.prepareStatement(query);
         ResultSet rs = sm.executeQuery(query);
         while (rs.next()) {
@@ -81,13 +82,13 @@ public class AppointmentMgmt {
             ZonedDateTime endTime = end.toLocalDateTime().atZone(ZoneId.systemDefault());
 
             ContactReport contactReport = new ContactReport();
-            contactReport.setEnd(endTime);
-            contactReport.setStart(startTime);
-            contactReport.setAppID(id);
-            contactReport.setCustomerID(cid);
+            contactReport.setAppEnd(endTime);
+            contactReport.setAppStart(startTime);
+            contactReport.setAppId(id);
+            contactReport.setCustomerId(cid);
             contactReport.setAppType(type);
-            contactReport.setDescription(description);
-            contactReport.setTitle(title);
+            contactReport.setAppDescription(description);
+            contactReport.setAppTitle(title);
             contactReport.setLocation(location);
 
             report.add(contactReport);
