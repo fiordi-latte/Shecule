@@ -2,10 +2,8 @@ package util;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Appointment;
-import model.Customer;
-import model.JDBC;
-import model.User;
+import javafx.fxml.FXML;
+import model.*;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -18,6 +16,7 @@ public class AppointmentMgmt {
     Statement sm = null;
     private static final Connection conn = JDBC.getConnection();
     public static final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+    public static final ObservableList<ContactReport> report = FXCollections.observableArrayList();
 
     public static ObservableList<Appointment> getAppointments(){
         return appointments;
@@ -62,6 +61,39 @@ public class AppointmentMgmt {
         sm.executeUpdate(query);
         int i = appointments.indexOf(appointment);
         appointments.remove(i);
+    }
+
+    public static ObservableList<ContactReport> reportContacts(int contactID) throws SQLException {
+        String query = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID FROM appointments WHERE Contact_ID = '" + contactID;
+        PreparedStatement sm = conn.prepareStatement(query);
+        ResultSet rs = sm.executeQuery(query);
+        while (rs.next()) {
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String type = rs.getString("Type");
+            Timestamp start = rs.getTimestamp("Start");
+            Timestamp end = rs.getTimestamp("End");
+            int cid = rs.getInt("Customer_ID");
+            int id = rs.getInt("Appointment_ID");
+            String location = rs.getString("Location");
+
+            ZonedDateTime startTime = start.toLocalDateTime().atZone(ZoneId.systemDefault());
+            ZonedDateTime endTime = end.toLocalDateTime().atZone(ZoneId.systemDefault());
+
+            ContactReport contactReport = new ContactReport();
+            contactReport.setEnd(endTime);
+            contactReport.setStart(startTime);
+            contactReport.setAppID(id);
+            contactReport.setCustomerID(cid);
+            contactReport.setAppType(type);
+            contactReport.setDescription(description);
+            contactReport.setTitle(title);
+            contactReport.setLocation(location);
+
+            report.add(contactReport);
+
+        }
+        return report;
     }
 
 

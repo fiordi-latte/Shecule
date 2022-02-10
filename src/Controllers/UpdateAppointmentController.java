@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointment;
+import model.Customer;
 import model.User;
 import util.AppointmentMgmt;
 import util.ContactMgmt;
@@ -14,6 +15,7 @@ import util.ErrorCheck;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -114,6 +116,12 @@ public class UpdateAppointmentController implements Initializable {
                 return;
             }
 
+            int checkCustomer = CustomerMgmt.getCustomerID(customerName);
+            if(checkCustomer == 0){
+                ErrorCheck.displayError("Please enter an existing customers name");
+                return;
+            }
+
             int contactID = ContactMgmt.getContactID(contactName);
             int customerID = CustomerMgmt.getCustomerID(customerName);
 
@@ -121,6 +129,10 @@ public class UpdateAppointmentController implements Initializable {
                 ErrorCheck.displayError("Please pick a date");
                 return;
             }
+
+            isValidTime(start);
+            isValidTime(end);
+
 
             LocalDateTime startLT = LocalDateTime.of(date, LocalTime.parse(start));
             LocalDateTime endLT = LocalDateTime.of(date, LocalTime.parse(end));
@@ -130,7 +142,7 @@ public class UpdateAppointmentController implements Initializable {
 
 
             boolean officeHours = hourStart >= 8 && hourEnd < 22;
-            boolean startBeforeEnd = hourStart < hourEnd;
+            boolean startBeforeEnd = startLT.isBefore(endLT);
             if(!officeHours){
                 ErrorCheck.displayError("Hours must be between 08:00 and 22:00");
                 return;
@@ -175,5 +187,16 @@ public class UpdateAppointmentController implements Initializable {
 
 
         });
+    }
+
+    public boolean isValidTime(String dateStr){
+        try{
+            LocalTime.parse(dateStr);
+        } catch (Exception e){
+            ErrorCheck.displayError("Enter valid time in format of HH:mm");
+            return false;
+
+        }
+            return true;
     }
 }

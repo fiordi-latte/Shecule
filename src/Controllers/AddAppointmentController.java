@@ -95,11 +95,17 @@ public class AddAppointmentController implements Initializable {
             int contactID = ContactMgmt.getContactID(contactName);
             int customerID = CustomerMgmt.getCustomerID(customerName);
 
+            if(customerID == 0){
+                ErrorCheck.displayError("Please enter an existing customers name");
+                return;
+            }
+
             if(date == null){
                 ErrorCheck.displayError("Please pick a date");
                 return;
             }
-
+            isValidTime(start);
+            isValidTime(end);
             LocalDateTime startLT = LocalDateTime.of(date, LocalTime.parse(start));
             LocalDateTime endLT = LocalDateTime.of(date, LocalTime.parse(end));
 
@@ -108,7 +114,7 @@ public class AddAppointmentController implements Initializable {
 
 
             boolean officeHours = hourStart >= 8 && hourEnd < 22;
-            boolean startBeforeEnd = hourStart < hourEnd;
+            boolean startBeforeEnd = startLT.isBefore(endLT);
             if(!officeHours){
                 ErrorCheck.displayError("Hours must be between 08:00 and 22:00");
                 return;
@@ -120,6 +126,8 @@ public class AddAppointmentController implements Initializable {
                 ErrorCheck.displayError("Start time must be before end time");
                 return;
             }
+
+
 
             LocalDateTime startLDT = LocalDateTime.of(date, LocalTime.parse(start));
             LocalDateTime endLDT = LocalDateTime.of(date, LocalTime.parse(end));
@@ -154,7 +162,16 @@ public class AddAppointmentController implements Initializable {
         });
 
 
+    }
 
+    public boolean isValidTime(String dateStr){
+        try{
+            LocalTime.parse(dateStr);
+        } catch (Exception e){
+            ErrorCheck.displayError("Enter valid time in format of HH:mm");
+            return false;
 
+        }
+        return true;
     }
 }
