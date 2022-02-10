@@ -7,18 +7,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginController">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
          <children>
-            <Label fx:id="userNameLabel" layoutX="246.0" layoutY="125.0" text="User Name:" />
-            <TextField fx:id="userNameInput" layoutX="226.0" layoutY="151.0" />
-            <Button fx:id="loginButton" layoutX="243.0" layoutY="242.0" mnemonicParsing="false" text="Login" />
-            <PasswordField fx:id="passwordInput" layoutX="202.0" layoutY="217.0" />
-            <Label layoutX="276.0" layoutY="45.0" text="Schedule" />
-            <Label fx:id="passwordLabel" layoutX="241.0" layoutY="183.0" text="Password" />
-            <VBox prefHeight="200.0" prefWidth="100.0" />
+            <Label fx:id="userNameLabel" layoutX="218.0" layoutY="154.0" text="User Name:" />
+            <TextField fx:id="userNameInput" layoutX="184.0" layoutY="179.0" />
+            <Button fx:id="loginButton" layoutX="226.0" layoutY="278.0" mnemonicParsing="false" text="Login" />
+            <PasswordField fx:id="passwordInput" layoutX="184.0" layoutY="245.0" />
+            <Label layoutX="193.0" layoutY="76.0" text="Schedule Application" />
+            <Label fx:id="passwordLabel" layoutX="222.0" layoutY="220.0" text="Password" />
+            <VBox prefHeight="200.0" prefWidth="126.0">
+               <children>
+                  <Label text="Zone ID:" />
+                  <Label fx:id="zoneId" prefHeight="17.0" prefWidth="114.0" text="Label" />
+               </children></VBox>
          </children>
       </AnchorPane>
    </children>

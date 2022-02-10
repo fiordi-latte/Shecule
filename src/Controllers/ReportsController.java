@@ -44,6 +44,9 @@ public class ReportsController implements Initializable {
 
 
 
+    //TODO ADD MONTHLY REPORT
+    //TODO ADD TYPE REPORT
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

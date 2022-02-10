@@ -91,7 +91,7 @@ public class AddAppointmentController implements Initializable {
                 newAlert.showAndWait();
                 return;
             }
-
+            //TODO OVERLAPPING CUSTOMERS
             int contactID = ContactMgmt.getContactID(contactName);
             int customerID = CustomerMgmt.getCustomerID(customerName);
 

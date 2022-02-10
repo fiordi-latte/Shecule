@@ -24,6 +24,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
@@ -38,6 +40,10 @@ public class LoginController implements Initializable {
     TextField userNameInput;
     @FXML
     TextField passwordInput;
+    @FXML
+    public Label zoneId;
+
+    public ZoneId currentZoneId = ZoneId.systemDefault();
 
     Statement sm = null;
     private static final Connection conn = JDBC.getConnection();
@@ -45,6 +51,9 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        String zid = currentZoneId.toString();
+
+        zoneId.setText(zid);
         userNameInput.setText("admin");
         passwordInput.setText("admin");
         loginButton.setOnAction(e -> {
