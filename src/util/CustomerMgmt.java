@@ -57,6 +57,15 @@ public class CustomerMgmt {
         return 0;
     }
 
+    public static String getCustomerNameByID(int id){
+        for(Customer customer : allCustomers){
+            if(customer.getCustID() == id){
+                return customer.getCustName();
+            }
+        }
+        return "Not found";
+    }
+
     public static ObservableList<Customer> getCustomers() {
         try {
 

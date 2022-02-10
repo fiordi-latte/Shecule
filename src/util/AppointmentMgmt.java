@@ -26,19 +26,34 @@ public class AppointmentMgmt {
     public static void addAppointment(Appointment appointment) throws SQLException {
         LocalDateTime start = LocalDateTime.from(appointment.getStartTime());
         LocalDateTime end = LocalDateTime.from(appointment.getEndTime());
-        String currentUser = User.getCurrentUser();
 
         String query = "INSERT INTO appointments VALUES ('"+appointment.getId()+"', '"+appointment.getTitle()+"', '" + appointment.getDescription() + "', '" + appointment.getLocation() + "','" +appointment.getType()+ "', '"
                 + Timestamp.valueOf(start) + "',' "+ Timestamp.valueOf(end) +"' ,'" + now +"', '"+ User.getCurrentUser() +"', '" + now + "','"  + User.getCurrentUser() + "','" + appointment.getCid() +"','" + appointment.getUid() + "','" + appointment.getContactID() +"')";
-        /**
-        String query = "INSERT INTO appointments VALUES ('"+appointment.getId()+"', '"+appointment.getTitle()+"', '" + appointment.getDescription() + "', '" + appointment.getLocation() + "','" +appointment.getType()+ "', '"
-                + now + "',' "+ now +"' ,'" + now +"', '"+ User.getCurrentUser() +"', '" + now + "','"  + User.getCurrentUser() + "','" + appointment.getCid() +"','" + appointment.getUid() + "','" + appointment.getContactID() +"')";
-*/
+
         PreparedStatement sm = conn.prepareStatement(query);
         sm.executeUpdate();
 
 
         appointments.add(appointment);
+    }
+
+    public static void updateAppointment(Appointment appointment) throws SQLException{
+
+        LocalDateTime start = LocalDateTime.from(appointment.getStartTime());
+        LocalDateTime end = LocalDateTime.from(appointment.getEndTime());
+        String query = "UPDATE appointments set Title = '" +appointment.getTitle()+"',  Description = '" + appointment.getDescription() + "', Location = '" + appointment.getLocation() + "', Type = '" +appointment.getType()+ "', Start = '"
+                + Timestamp.valueOf(start) + "', End = '"+ Timestamp.valueOf(end) + "', Last_Update  = '" + now + "', Last_Updated_By = '"  + User.getCurrentUser() + "', Customer_ID = '"
+                + appointment.getCid() +"', User_ID = '" + appointment.getUid() + "', Contact_ID = '" + appointment.getContactID() + "' WHERE Appointment_ID = '" + appointment.getId() + "'";
+
+        PreparedStatement sm = conn.prepareStatement(query);
+        sm.executeUpdate();
+
+
+        int i = appointments.indexOf(appointment);
+        System.out.println(i);
+
+        appointments.set(i, appointment);
+
     }
 
     public static void deleteAppointment(Appointment appointment) throws SQLException {
@@ -51,6 +66,7 @@ public class AppointmentMgmt {
 
 
     public static void setAppointments() {
+        appointments.clear();
         try {
 
             String query = "SELECT * FROM appointments";

@@ -30,6 +30,15 @@ public class ContactMgmt {
 
     }
 
+    public static String getContactNameByID(int id){
+        for(Contact contact : contacts){
+            if(contact.getID() == id){
+                return contact.getName();
+            }
+        }
+        return "";
+    }
+
     public static int getContactID(String name){
         for(Contact contact : contacts){
             if(contact.getName().equals(name)){

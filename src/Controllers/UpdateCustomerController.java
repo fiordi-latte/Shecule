@@ -37,8 +37,6 @@ public class UpdateCustomerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-       // int id = CustomerMgmt.getCustomerID(name);
-
         updateCustomer = MainFormController.getCustomer();
         customerNameInput.setText(updateCustomer.getCustName());
         customerPhoneInput.setText(updateCustomer.getCustPhone());
@@ -46,22 +44,19 @@ public class UpdateCustomerController implements Initializable {
         customerZipCodeInput.setText(updateCustomer.getCustZip());
 
         customerCountryInput.getSelectionModel().select(updateCustomer.getCustCid());
+        System.out.println(updateCustomer.getCustID());
 
-        //customerStateInput.getItems().add(division.getName());
-        //Division currentDivision =
         /**
          * Get the name of the selected customers division
          */
-        System.out.println(updateCustomer.getCustDiv());
+
         try {
             String divisionName = DivisionMgmt.getDivisionName(Integer.parseInt(updateCustomer.getCustDiv()));
-            //System.out.println(divisionName);
             DivisionMgmt.getDivisionName(Integer.parseInt(updateCustomer.getCustDiv()));
             customerStateInput.getSelectionModel().select(DivisionMgmt.getDivisionName(Integer.parseInt(updateCustomer.getCustDiv())));
             selectedDivision = divisionName;
         }
         catch (Exception e){
-            System.out.print("HERE");
             System.out.println(updateCustomer.getCustDiv());
         }
 
@@ -80,8 +75,6 @@ public class UpdateCustomerController implements Initializable {
         String custName = customerNameInput.getText();
         Customer newCustomer = new Customer(custName);
         int id = CustomerMgmt.getCustomerID(custName);
-
-        System.out.println(id);
 
         newCustomer.setCustID(id);
 
@@ -170,15 +163,16 @@ public class UpdateCustomerController implements Initializable {
                 newAlert.showAndWait();
             }
 
-            newCustomer.setCustName(name);
-            newCustomer.setCustAddress(address);
-            newCustomer.setCustDiv(divID);
-            newCustomer.setCustPhone(phone);
-            newCustomer.setCreateTime(time);
-            newCustomer.setLastUpdate(time);
-            newCustomer.setCustZip(zip);
+
+            updateCustomer.setCustName(name);
+            updateCustomer.setCustAddress(address);
+            updateCustomer.setCustDiv(divID);
+            updateCustomer.setCustPhone(phone);
+            updateCustomer.setCreateTime(time);
+            updateCustomer.setLastUpdate(time);
+            updateCustomer.setCustZip(zip);
             try {
-                CustomerMgmt.updateCustomer(newCustomer);
+                CustomerMgmt.updateCustomer(updateCustomer);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

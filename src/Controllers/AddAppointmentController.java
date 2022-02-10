@@ -106,6 +106,7 @@ public class AddAppointmentController implements Initializable {
             int hourStart = startLT.getHour();
             int hourEnd = endLT.getHour();
 
+
             boolean officeHours = hourStart >= 8 && hourEnd < 22;
             boolean startBeforeEnd = hourStart < hourEnd;
             if(!officeHours){
@@ -120,12 +121,12 @@ public class AddAppointmentController implements Initializable {
                 return;
             }
 
+            LocalDateTime startLDT = LocalDateTime.of(date, LocalTime.parse(start));
+            LocalDateTime endLDT = LocalDateTime.of(date, LocalTime.parse(end));
 
+            ZonedDateTime startTime = startLDT.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"));
 
-
-
-            ZonedDateTime startTime = ZonedDateTime.of(date, LocalTime.parse(start), ZoneId.of("UTC"));
-            ZonedDateTime endTime = ZonedDateTime.of(date, LocalTime.parse(end), ZoneId.of("UTC"));
+            ZonedDateTime endTime = endLDT.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"));
 
             Appointment newAppointment = new Appointment();
             newAppointment.setLocation(location);
@@ -145,7 +146,7 @@ public class AddAppointmentController implements Initializable {
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-
+            AppointmentMgmt.setAppointments();
             Stage stage = (Stage) save.getScene().getWindow();
             stage.close();
 

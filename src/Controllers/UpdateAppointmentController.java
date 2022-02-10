@@ -49,13 +49,37 @@ public class UpdateAppointmentController implements Initializable {
         public Appointment selectedApp;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        contact.setItems(ContactMgmt.getContactNames());
-
-
-
+        selectedApp = AppointmentController.getSelectedAppointment();
         uid = User.getUserID(User.getCurrentUser());
+        System.out.println(selectedApp.getId());
+        /**
+         * get and fill the contact of selected appointment
+         */
+        String selectedContact = ContactMgmt.getContactNameByID(selectedApp.getContactID());
 
-        System.out.println(uid);
+        String selectedCustomer = CustomerMgmt.getCustomerNameByID(selectedApp.getCid());
+
+
+        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
+        String selectedStart = selectedApp.getStartTime().format(formatterTime);
+        String selectedEnd = selectedApp.getEndTime().format(formatterTime);
+        LocalDate selectedDay = selectedApp.getStartTime().toLocalDate();
+
+        appTitle.setText(selectedApp.getTitle());
+        appDescription.setText(selectedApp.getDescription());
+        appLocation.setText(selectedApp.getLocation());
+        appType.setText(selectedApp.getType());
+        contact.getSelectionModel().select(selectedContact);
+        customer.setText(selectedCustomer);
+        appStartTime.setText(selectedStart);
+        appEndTime.setText(selectedEnd);
+        datePicker.setValue(selectedDay);
+
+        contact.setOnMouseClicked(e -> {
+            contact.setItems(ContactMgmt.getContactNames());
+        });
+
+        //System.out.println(uid);
 
         cancel.setOnAction(e->{
             Stage stage = (Stage) cancel.getScene().getWindow();
@@ -104,6 +128,7 @@ public class UpdateAppointmentController implements Initializable {
             int hourStart = startLT.getHour();
             int hourEnd = endLT.getHour();
 
+
             boolean officeHours = hourStart >= 8 && hourEnd < 22;
             boolean startBeforeEnd = hourStart < hourEnd;
             if(!officeHours){
@@ -119,30 +144,31 @@ public class UpdateAppointmentController implements Initializable {
             }
 
 
+            LocalDateTime startLDT = LocalDateTime.of(date, LocalTime.parse(start));
+            LocalDateTime endLDT = LocalDateTime.of(date, LocalTime.parse(end));
 
+            ZonedDateTime startTime = startLDT.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"));
 
+            ZonedDateTime endTime = endLDT.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"));
 
-            ZonedDateTime startTime = ZonedDateTime.of(date, LocalTime.parse(start), ZoneId.of("UTC"));
-            ZonedDateTime endTime = ZonedDateTime.of(date, LocalTime.parse(end), ZoneId.of("UTC"));
-
-            Appointment newAppointment = new Appointment();
-            newAppointment.setLocation(location);
-            newAppointment.setTitle(title);
-            newAppointment.setDescription(description);
-            newAppointment.setType(type);
-            newAppointment.setID(id);
-            newAppointment.setCid(customerID);
-            newAppointment.setUid(uid);
-            newAppointment.setContactID(contactID);
-            newAppointment.setStartTime(startTime);
-            newAppointment.setEndTime(endTime);
-
+            selectedApp.setLocation(location);
+            selectedApp.setTitle(title);
+            selectedApp.setDescription(description);
+            selectedApp.setType(type);
+            selectedApp.setCid(customerID);
+            selectedApp.setUid(uid);
+            selectedApp.setContactID(contactID);
+            selectedApp.setStartTime(startTime);
+            selectedApp.setEndTime(endTime);
+            System.out.println(selectedApp.getLocalStartTime());
 
             try {
-                AppointmentMgmt.addAppointment(newAppointment);
+                AppointmentMgmt.updateAppointment(selectedApp);
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
+            AppointmentMgmt.setAppointments();
 
             Stage stage = (Stage) save.getScene().getWindow();
             stage.close();

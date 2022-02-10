@@ -11,10 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Customer;
-import util.ContactMgmt;
-import util.CountryMgmt;
-import util.CustomerMgmt;
-import util.DivisionMgmt;
+import util.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -49,6 +46,7 @@ public class MainFormController implements Initializable{
         DivisionMgmt.setDivisions();
         CustomerMgmt.getCustomers();
         ContactMgmt.setContacts();
+        AppointmentMgmt.setAppointments();
 
         //customerID.setCellValueFactory(new PropertyValueFactory<>("custId"));
 
