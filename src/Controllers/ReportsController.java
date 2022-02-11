@@ -2,13 +2,13 @@ package Controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.Contact;
 import model.ContactReport;
+import model.ReportByMonth;
+import model.ReportByType;
 import util.AppointmentMgmt;
 import util.ContactMgmt;
 
@@ -41,7 +41,16 @@ public class ReportsController implements Initializable {
     public TableColumn<ContactReport, String> appCustId;
     @FXML
     public ComboBox<String> contact;
-
+    @FXML
+    public RadioButton byTypeRadio;
+    @FXML
+    public RadioButton byMonthRadio;
+    @FXML
+    public RadioButton byLocationRadio;
+    @FXML
+    public TableColumn<ReportByMonth, String> numOfCustomers;
+    @FXML
+    public TableColumn<ReportByMonth, String> monthOrType;
 
 
     //TODO ADD MONTHLY REPORT
@@ -50,21 +59,51 @@ public class ReportsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        numOfCustomers.setCellValueFactory(new PropertyValueFactory<>("reportCount"));
+        monthOrType.setCellValueFactory(new PropertyValueFactory<>("reportMonth"));
+
+        byLocationRadio.setOnAction(e->{
+            monthOrType.setText("Location");
+            try {
+                customerView.setItems(AppointmentMgmt.reportByLocation());
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+
+        byMonthRadio.setOnAction(e->{
+            monthOrType.setText("Month");
+            try {
+                customerView.setItems(AppointmentMgmt.reportByMonths());
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        byTypeRadio.setOnAction(e->{
+            monthOrType.setText("Type");
+            try {
+                customerView.setItems(AppointmentMgmt.reportByType());
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+
+
         appId.setCellValueFactory(new PropertyValueFactory<>("appId"));
         appTitle.setCellValueFactory(new PropertyValueFactory<>("appTitle"));
         appDescription.setCellValueFactory(new PropertyValueFactory<>("appDescription"));
-        //appLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
-        //appContact.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+
         appType.setCellValueFactory(new PropertyValueFactory<>("appType"));
         appStart.setCellValueFactory(new PropertyValueFactory<>("appStart"));
         appEnd.setCellValueFactory(new PropertyValueFactory<>("appEnd"));
         appCustId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        //userID.setCellValueFactory(new PropertyValueFactory<>("uid"));
-        //AppointmentMgmt.setAppointments();
+
 
         contact.setItems(ContactMgmt.getContactNames());
-       // String selectedContact = contact.getValue();
-       // int contactId = ContactMgmt.getContactID(selectedContact);
+
 
         contact.setOnAction(e->{
             String selectedContact = contact.getValue();
@@ -76,6 +115,11 @@ public class ReportsController implements Initializable {
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
+        });
+
+        exit.setOnAction(e-> {
+            Stage stage = (Stage) exit.getScene().getWindow();
+            stage.close();
         });
 
        // contactView.setItems(AppointmentMgmt.reportContacts(contactId));

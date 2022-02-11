@@ -17,6 +17,7 @@ public class AppointmentMgmt {
     private static final Connection conn = JDBC.getConnection();
     public static final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
     public static final ObservableList<ContactReport> report = FXCollections.observableArrayList();
+    public static final ObservableList<ReportByMonth> reportByMonth = FXCollections.observableArrayList();
 
     public static ObservableList<Appointment> getAppointments(){
         return appointments;
@@ -63,6 +64,62 @@ public class AppointmentMgmt {
         appointments.remove(i);
     }
 
+    public static ObservableList<ReportByMonth> reportByMonths() throws SQLException{
+        reportByMonth.clear();
+        String query = "SELECT DATE_FORMAT(Start, '%M') AS month, COUNT(start) AS count FROM Appointments GROUP BY month;";
+
+        PreparedStatement sm = conn.prepareStatement(query);
+        ResultSet rs = sm.executeQuery(query);
+        while (rs.next()) {
+            String month = rs.getString("month");
+           //System.out.println(month);
+            int count = rs.getInt("count");
+            ReportByMonth newReport = new ReportByMonth();
+            newReport.setReportMonth(month);
+            newReport.setReportCount(count);
+            reportByMonth.add(newReport);
+
+        }
+        return reportByMonth;
+    }
+
+    public static ObservableList<ReportByMonth> reportByType() throws SQLException{
+        reportByMonth.clear();
+        String query = "SELECT Type AS type, COUNT(Customer_ID) AS count FROM Appointments GROUP BY type;";
+
+        PreparedStatement sm = conn.prepareStatement(query);
+        ResultSet rs = sm.executeQuery(query);
+        while (rs.next()) {
+            String type = rs.getString("type");
+            //System.out.println(month);
+            int count = rs.getInt("count");
+            ReportByMonth newReport = new ReportByMonth();
+            newReport.setReportMonth(type);
+            newReport.setReportCount(count);
+            reportByMonth.add(newReport);
+
+        }
+        return reportByMonth;
+    }
+
+    public static ObservableList<ReportByMonth> reportByLocation() throws SQLException{
+        reportByMonth.clear();
+        String query = "SELECT Location AS location, COUNT(Customer_ID) AS count FROM Appointments GROUP BY location;";
+
+        PreparedStatement sm = conn.prepareStatement(query);
+        ResultSet rs = sm.executeQuery(query);
+        while (rs.next()) {
+            String type = rs.getString("location");
+            //System.out.println(month);
+            int count = rs.getInt("count");
+            ReportByMonth newReport = new ReportByMonth();
+            newReport.setReportMonth(type);
+            newReport.setReportCount(count);
+            reportByMonth.add(newReport);
+
+        }
+        return reportByMonth;
+    }
     public static ObservableList<ContactReport> reportContacts(int contactID) throws SQLException {
         report.clear();
         String query = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID FROM appointments WHERE Contact_ID = '" + contactID + "'";
