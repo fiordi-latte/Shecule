@@ -132,6 +132,11 @@ public class AddAppointmentController implements Initializable {
             LocalDateTime startLDT = LocalDateTime.of(date, LocalTime.parse(start));
             LocalDateTime endLDT = LocalDateTime.of(date, LocalTime.parse(end));
 
+            if(startLT.isBefore(LocalDateTime.now())){
+                ErrorCheck.displayError("Please pick a time in the future");
+                return;
+            }
+
             ZonedDateTime startTime = startLDT.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"));
 
             ZonedDateTime endTime = endLDT.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"));
@@ -148,6 +153,10 @@ public class AddAppointmentController implements Initializable {
             newAppointment.setStartTime(startTime);
             newAppointment.setEndTime(endTime);
 
+            if(customerAppExists(customerID, startLDT, endLDT)){
+                ErrorCheck.displayError("Customer is already scheduled for that time");
+                return;
+            }
 
             try {
                 AppointmentMgmt.addAppointment(newAppointment);
@@ -164,6 +173,37 @@ public class AddAppointmentController implements Initializable {
 
     }
 
+    /**
+     * Check that this customer doesn't already have an exisiting appointment at these times
+     * @param custId
+     * @param time
+     * @param end
+     * @return true if this customer has an appointment scheduled at that time, false if they do not
+     */
+    public static boolean customerAppExists(int custId, LocalDateTime time, LocalDateTime end){
+
+       ZonedDateTime startTime = time.atZone(ZoneId.systemDefault());
+        ZonedDateTime endTime = end.atZone(ZoneId.systemDefault());
+
+        for (Appointment appointment : AppointmentMgmt.getAppointments()){
+
+            if(startTime.isAfter(appointment.getStartTime()) && startTime.isBefore(appointment.getEndTime()) || endTime.isAfter(appointment.getStartTime()) && endTime.isBefore(appointment.getEndTime())){
+                System.out.println(appointment.getStartTime());
+                if(appointment.getCid() == custId){
+                    return true;
+
+                }
+            }
+        }
+        return false;
+
+    }
+
+    /**
+     * Return false if the format is not correct
+     * @param dateStr
+     * @return
+     */
     public boolean isValidTime(String dateStr){
         try{
             LocalTime.parse(dateStr);

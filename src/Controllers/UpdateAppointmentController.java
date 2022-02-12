@@ -88,16 +88,11 @@ public class UpdateAppointmentController implements Initializable {
             stage.close();
         });
 
+        /**
+         * get all text from the TextFields
+         * set them to the updated customer and update them in AppointmentMgmt
+         */
         save.setOnAction(e->{
-            int id;
-            if(AppointmentMgmt.getAppointments().isEmpty()){
-                id = 0;
-            }
-            else {
-                //Appointment appointment = AppointmentMgmt.getAppointments().get(-1);
-                id = AppointmentMgmt.getAppointments().get(AppointmentMgmt.getAppointments().size() - 1).getId() + 1;
-                //id = appointment.getId();
-            }
             String title = appTitle.getText();
             String description = appDescription.getText();
             String type = appType.getText();
@@ -137,6 +132,11 @@ public class UpdateAppointmentController implements Initializable {
             LocalDateTime startLT = LocalDateTime.of(date, LocalTime.parse(start));
             LocalDateTime endLT = LocalDateTime.of(date, LocalTime.parse(end));
 
+            if(startLT.isBefore(LocalDateTime.now())){
+                ErrorCheck.displayError("Please pick a time in the future");
+                return;
+            }
+
             int hourStart = startLT.getHour();
             int hourEnd = endLT.getHour();
 
@@ -172,7 +172,12 @@ public class UpdateAppointmentController implements Initializable {
             selectedApp.setContactID(contactID);
             selectedApp.setStartTime(startTime);
             selectedApp.setEndTime(endTime);
-            System.out.println(selectedApp.getLocalStartTime());
+
+            if(AddAppointmentController.customerAppExists(customerID, startLDT, endLDT))
+            {
+                ErrorCheck.displayError("The appointment times overlap with this customers existing appointment");
+                return;
+            }
 
             try {
                 AppointmentMgmt.updateAppointment(selectedApp);
@@ -189,6 +194,11 @@ public class UpdateAppointmentController implements Initializable {
         });
     }
 
+    /**
+     * Return false if the format is not correct
+     * @param dateStr
+     * @return
+     */
     public boolean isValidTime(String dateStr){
         try{
             LocalTime.parse(dateStr);

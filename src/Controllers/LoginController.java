@@ -80,6 +80,7 @@ public class LoginController implements Initializable {
                 stage.setTitle("Calender/Customer");
                 stage.setScene(scene);
                     stage.initModality(Modality.APPLICATION_MODAL);
+
                 stage.show();
                 } catch (IOException ex) {
                     ex.printStackTrace();
