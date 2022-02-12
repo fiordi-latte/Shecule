@@ -114,7 +114,12 @@ public class LoginController implements Initializable {
     }
 
 
-
+    /**
+     * Verifies that the passed credentials are found in the database
+     * @param userName
+     * @param password
+     * @return Boolean
+     */
     public Boolean verifyLogin(String userName, String password)
     {
         try {

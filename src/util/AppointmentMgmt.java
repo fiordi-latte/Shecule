@@ -1,8 +1,10 @@
+/**
+ * Manages appointment database and appoint list interactions
+ */
 package util;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import model.*;
 
 import java.sql.*;
@@ -23,6 +25,11 @@ public class AppointmentMgmt {
         return appointments;
     }
 
+    /**
+     * adds newly created appointment to the database and list
+     * @param appointment
+     * @throws SQLException
+     */
     public static void addAppointment(Appointment appointment) throws SQLException {
         LocalDateTime start = LocalDateTime.from(appointment.getStartTime());
         LocalDateTime end = LocalDateTime.from(appointment.getEndTime());
@@ -37,6 +44,11 @@ public class AppointmentMgmt {
         appointments.add(appointment);
     }
 
+    /**
+     * updates selected appointment
+     * @param appointment
+     * @throws SQLException
+     */
     public static void updateAppointment(Appointment appointment) throws SQLException{
 
         LocalDateTime start = LocalDateTime.from(appointment.getStartTime());
@@ -56,6 +68,11 @@ public class AppointmentMgmt {
 
     }
 
+    /**
+     * Removes selected appointment
+     * @param appointment
+     * @throws SQLException
+     */
     public static void deleteAppointment(Appointment appointment) throws SQLException {
         String query = "DELETE FROM appointments where Appointment_ID = '" + appointment.getId() + "'";
         PreparedStatement sm = conn.prepareStatement(query);
@@ -64,6 +81,11 @@ public class AppointmentMgmt {
         appointments.remove(i);
     }
 
+    /**
+     * Creates and returns a list of customers associated with appointment months
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<ReportByMonth> reportByMonths() throws SQLException{
         reportByMonth.clear();
         String query = "SELECT DATE_FORMAT(Start, '%M') AS month, COUNT(start) AS count FROM Appointments GROUP BY month;";
@@ -72,7 +94,6 @@ public class AppointmentMgmt {
         ResultSet rs = sm.executeQuery(query);
         while (rs.next()) {
             String month = rs.getString("month");
-           //System.out.println(month);
             int count = rs.getInt("count");
             ReportByMonth newReport = new ReportByMonth();
             newReport.setReportMonth(month);
@@ -83,6 +104,11 @@ public class AppointmentMgmt {
         return reportByMonth;
     }
 
+    /**
+     * Returns a list of customers associated with an appointment type
+     * @return ObservalbeList reportByMonth
+     * @throws SQLException
+     */
     public static ObservableList<ReportByMonth> reportByType() throws SQLException{
         reportByMonth.clear();
         String query = "SELECT Type AS type, COUNT(Customer_ID) AS count FROM Appointments GROUP BY type;";
@@ -102,6 +128,11 @@ public class AppointmentMgmt {
         return reportByMonth;
     }
 
+    /**
+     * returns a list of number of customers matched to locations
+     * @return ObservableList reportByMonth
+     * @throws SQLException
+     */
     public static ObservableList<ReportByMonth> reportByLocation() throws SQLException{
         reportByMonth.clear();
         String query = "SELECT Location AS location, COUNT(Customer_ID) AS count FROM Appointments GROUP BY location;";
@@ -120,6 +151,13 @@ public class AppointmentMgmt {
         }
         return reportByMonth;
     }
+
+    /**
+     * Returns a list for the contacts by appointment
+     * @param contactID
+     * @return ObservableList report
+     * @throws SQLException
+     */
     public static ObservableList<ContactReport> reportContacts(int contactID) throws SQLException {
         report.clear();
         String query = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID FROM appointments WHERE Contact_ID = '" + contactID + "'";
@@ -154,7 +192,9 @@ public class AppointmentMgmt {
         return report;
     }
 
-
+    /**
+     * get and set all appointments from the database to an observablelist
+     */
     public static void setAppointments() {
         appointments.clear();
         try {
