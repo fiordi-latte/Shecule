@@ -10,9 +10,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import jdk.dynalink.StandardOperation;
 import model.JDBC;
 import model.User;
+import util.ErrorCheck;
 
 
 import java.io.*;
@@ -27,21 +27,28 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.ResourceBundle;
+
+import static java.util.Locale.FRANCE;
 
 public class LoginController implements Initializable {
     @FXML
-    Button loginButton;
+    public Button loginButton;
     @FXML
-    Label userNameLabel;
+    public Label usernameLabel;
     @FXML
-    Label passwordLabel;
+
+    public Label passwordLabel;
     @FXML
-    TextField userNameInput;
+    public TextField userNameInput;
     @FXML
-    TextField passwordInput;
+    public Label titleLabel;
+    @FXML
+    public TextField passwordInput;
     @FXML
     public Label zoneId;
+    @FXML
 
     public ZoneId currentZoneId = ZoneId.systemDefault();
 
@@ -51,14 +58,30 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Locale.setDefault(FRANCE);
         String zid = currentZoneId.toString();
+        try {
+            resourceBundle = ResourceBundle.getBundle("Properties.login", Locale.getDefault());
+            System.out.println(Locale.getDefault());
+            zoneId.setText(zid);
+            passwordLabel.setText(resourceBundle.getString("password"));
+            usernameLabel.setText(resourceBundle.getString("username"));
+            titleLabel.setText(resourceBundle.getString("title"));
+            loginButton.setText(resourceBundle.getString("login"));
 
-        zoneId.setText(zid);
-        userNameInput.setText("admin");
-        passwordInput.setText("admin");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ResourceBundle finalResourceBundle = resourceBundle;
         loginButton.setOnAction(e -> {
             String userName = userNameInput.getText();
             String password = passwordInput.getText();
+
+            if(ErrorCheck.isEmpty(userName) || ErrorCheck.isEmpty(password)){
+                ErrorCheck.displayError(finalResourceBundle.getString("empty"));
+                return;
+            }
 
             if(verifyLogin(userName, password)){
                 User.setCurrentUser(userNameInput.getText());
@@ -105,9 +128,9 @@ public class LoginController implements Initializable {
             }
             else{
                 String toWrite = "Unsuccessful login by '"+ userName +"' at '" + LocalDateTime.now() +"'";Path file = Paths.get("login-activity.txt");try {    Files.write(file, Collections.singleton(toWrite), StandardCharsets.UTF_8, StandardOpenOption.APPEND);} catch (IOException ex) {    ex.printStackTrace();}
-
+                ResourceBundle resourceBundle = ResourceBundle.getBundle("Properties.login", Locale.getDefault());
                 Alert newAlert = new Alert(Alert.AlertType.ERROR);
-                newAlert.setContentText("Invalid Login Credentials");
+                newAlert.setContentText(resourceBundle.getString("invalid"));
                 newAlert.showAndWait();
 
                 return Boolean.FALSE;

@@ -7,27 +7,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainFormController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="289.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainFormController">
    <children>
-      <AnchorPane prefHeight="406.0" prefWidth="600.0">
+      <AnchorPane prefHeight="400.0" prefWidth="476.0">
          <children>
             <Button fx:id="addCust" layoutX="43.0" layoutY="267.0" mnemonicParsing="false" text="Add" />
             <Button fx:id="updateCust" layoutX="117.0" layoutY="267.0" mnemonicParsing="false" text="Update" />
             <Button fx:id="deleteCust" layoutX="191.0" layoutY="267.0" mnemonicParsing="false" text="Delete" />
-             <Button fx:id="appointments" layoutX="271.0" layoutY="267.0" mnemonicParsing="false" text="Appointments" />
+             <Button fx:id="appointments" layoutX="43.0" layoutY="310.0" mnemonicParsing="false" text="Appointments" />
             <TableView fx:id="customerView" layoutX="43.0" layoutY="43.0" prefHeight="200.0" prefWidth="200.0">
               <columns>
-                <TableColumn fx:id="customerName" prefWidth="150.0" text="Name" />
+                <TableColumn fx:id="customerName" prefWidth="199.0" text="Name" />
               </columns>
             </TableView>
             <Label layoutX="48.0" layoutY="14.0" text="Customers" />
-            <TableView layoutX="338.0" layoutY="52.0" prefHeight="200.0" prefWidth="200.0">
-              <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
-            </TableView>
-            <Button fx:id="reports" layoutX="386.0" layoutY="267.0" mnemonicParsing="false" text="Reports" />
+            <Button fx:id="reports" layoutX="188.0" layoutY="310.0" mnemonicParsing="false" text="Reports" />
          </children>
       </AnchorPane>
    </children>
