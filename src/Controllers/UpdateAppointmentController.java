@@ -1,3 +1,6 @@
+/**
+ * Controller for the update appointment view
+ */
 package Controllers;
 
 import javafx.collections.ObservableList;
@@ -6,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointment;
-import model.Customer;
 import model.User;
 import util.AppointmentMgmt;
 import util.ContactMgmt;
@@ -15,7 +17,6 @@ import util.ErrorCheck;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -46,21 +47,20 @@ public class UpdateAppointmentController implements Initializable {
         @FXML
         public Button cancel;
         public ObservableList<String> contactNames;
-        private final DateTimeFormatter timePat = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
+
         int uid;
         public Appointment selectedApp;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         selectedApp = AppointmentController.getSelectedAppointment();
         uid = User.getUserID(User.getCurrentUser());
-        System.out.println(selectedApp.getId());
+
         /**
          * get and fill the contact of selected appointment
          */
         String selectedContact = ContactMgmt.getContactNameByID(selectedApp.getContactID());
 
         String selectedCustomer = CustomerMgmt.getCustomerNameByID(selectedApp.getCid());
-
 
         DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
         String selectedStart = selectedApp.getStartTime().format(formatterTime);
@@ -77,11 +77,16 @@ public class UpdateAppointmentController implements Initializable {
         appEndTime.setText(selectedEnd);
         datePicker.setValue(selectedDay);
 
+        /**
+         * lambda expression to handle when the combobox is selected
+         */
         contact.setOnMouseClicked(e -> {
             contact.setItems(ContactMgmt.getContactNames());
         });
 
-        //System.out.println(uid);
+        /**
+         * Lambda expression when the cancel button is pressed
+         */
 
         cancel.setOnAction(e->{
             Stage stage = (Stage) cancel.getScene().getWindow();
@@ -89,6 +94,7 @@ public class UpdateAppointmentController implements Initializable {
         });
 
         /**
+         * Lambda expression for when the save button is pressed
          * get all text from the TextFields
          * set them to the updated customer and update them in AppointmentMgmt
          */
@@ -128,7 +134,6 @@ public class UpdateAppointmentController implements Initializable {
             isValidTime(start);
             isValidTime(end);
 
-
             LocalDateTime startLT = LocalDateTime.of(date, LocalTime.parse(start));
             LocalDateTime endLT = LocalDateTime.of(date, LocalTime.parse(end));
 
@@ -140,7 +145,6 @@ public class UpdateAppointmentController implements Initializable {
             int hourStart = startLT.getHour();
             int hourEnd = endLT.getHour();
 
-
             boolean officeHours = hourStart >= 8 && hourEnd < 22;
             boolean startBeforeEnd = startLT.isBefore(endLT);
             if(!officeHours){
@@ -148,13 +152,10 @@ public class UpdateAppointmentController implements Initializable {
                 return;
             }
 
-
-
             if(!startBeforeEnd){
                 ErrorCheck.displayError("Start time must be before end time");
                 return;
             }
-
 
             LocalDateTime startLDT = LocalDateTime.of(date, LocalTime.parse(start));
             LocalDateTime endLDT = LocalDateTime.of(date, LocalTime.parse(end));

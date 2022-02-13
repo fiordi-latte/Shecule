@@ -148,22 +148,13 @@ public class MainFormController implements Initializable{
         });
 
         customerName.setCellValueFactory(new PropertyValueFactory<>("custName"));
-        //System.out.println(customers);
-        /**
-         *
 
-        for(Customer customer : CustomerMgmt.allCustomers){
-            System.out.println(customer.getCustName());
-        }
-         */
         customerView.setItems(CustomerMgmt.allCustomers);
-
 
     }
 
     public static Customer getCustomer(){
         return updateCustomer;
     }
-
 
 }

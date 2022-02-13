@@ -1,3 +1,6 @@
+/**
+ * Controller for the update customer view
+ */
 package Controllers;
 
 import javafx.fxml.FXML;
@@ -44,7 +47,6 @@ public class UpdateCustomerController implements Initializable {
         customerZipCodeInput.setText(updateCustomer.getCustZip());
 
         customerCountryInput.getSelectionModel().select(updateCustomer.getCustCid());
-        System.out.println(updateCustomer.getCustID());
 
         /**
          * Get the name of the selected customers division
@@ -102,7 +104,7 @@ public class UpdateCustomerController implements Initializable {
             }
         }
         /**
-         * Handles clicking on the country combobox and sets division combobox appropriately
+         * Lambda expression that handles clicking on the country combobox and sets division combobox appropriately
          */
 
         customerCountryInput.setOnAction(e -> {
@@ -131,11 +133,17 @@ public class UpdateCustomerController implements Initializable {
             }
         });
 
+        /**
+         * Lambda expression to handle when the combobox is selected
+         */
         customerStateInput.setOnAction(e->{
             selectedDivision = customerStateInput.getValue();
 
         });
 
+        /**
+         * Lambda expression to handle when the cancel button is pressed
+         */
         cancelButton.setOnAction(e->{
             customerCountryInput.setValue(null);
             customerStateInput.setValue(null);
@@ -143,6 +151,9 @@ public class UpdateCustomerController implements Initializable {
             stage.close();
         });
 
+        /**
+         * Lambda expression to handle when the save button is pressed
+         */
         saveButton.setOnAction(e -> {
             String name = customerNameInput.getText();
             String address = customerAddressInput.getText();
@@ -162,7 +173,6 @@ public class UpdateCustomerController implements Initializable {
                 newAlert.setContentText("Please enter only numbers in the phone and zip code fields");
                 newAlert.showAndWait();
             }
-
 
             updateCustomer.setCustName(name);
             updateCustomer.setCustAddress(address);

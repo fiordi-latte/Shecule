@@ -3,6 +3,7 @@
  */
 
 package Controllers;
+import com.sun.javafx.runtime.VersionInfo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -32,7 +33,10 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import static com.sun.javafx.runtime.VersionInfo.getRuntimeVersion;
+import static com.sun.javafx.runtime.VersionInfo.getVersion;
 import static java.util.Locale.FRANCE;
+
 
 public class LoginController implements Initializable {
     @FXML
@@ -147,4 +151,5 @@ public class LoginController implements Initializable {
 
         return true;
     }
+
 }
