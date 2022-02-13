@@ -2,8 +2,6 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
-import model.JDBC;
 import java.sql.*;
 
 public class User {
@@ -11,7 +9,6 @@ public class User {
     private String userPassword;
     private int userID;
     private boolean isCurrent;
-    //public static String user;
     public static ObservableList<User> users = FXCollections.observableArrayList();
     private static final Connection conn = JDBC.getConnection();
     private static int currentUserIndex;

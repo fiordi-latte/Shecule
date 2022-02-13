@@ -1,5 +1,5 @@
 /**
- * Manages appointment database and appoint list interactions
+ * Manages appointment database and appointment list interactions
  */
 package util;
 

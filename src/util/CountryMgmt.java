@@ -1,10 +1,11 @@
+/**
+ * Manages country information from database and list
+ */
 package util;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Country;
-import model.Customer;
-import model.Division;
 import model.JDBC;
 
 import java.sql.*;
@@ -20,6 +21,11 @@ public class CountryMgmt {
 
     }
 
+    /**
+     * gets the country name from the passed id
+     * @param id
+     * @return String
+     */
     public static String getCountryName(int id){
         for(Country country : countries){
             if(country.getID() == id){
@@ -29,6 +35,9 @@ public class CountryMgmt {
         return "";
     }
 
+    /**
+     * gets country information from the database and adds it to an observable list
+     */
     public static void setCountries(){
         try {
 

@@ -1,3 +1,6 @@
+/**
+ * Controller for the main appointment view
+ */
 package Controllers;
 
 import javafx.collections.transformation.FilteredList;
@@ -12,17 +15,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Appointment;
 import util.AppointmentMgmt;
-import util.CustomerMgmt;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZonedDateTime;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Filter;
 
 public class AppointmentController implements Initializable {
     @FXML
@@ -43,7 +42,6 @@ public class AppointmentController implements Initializable {
     public TableColumn<Appointment, String> appContact;
     @FXML
     public TableColumn<Appointment, String> custID;
-
     @FXML
     public TableColumn<Appointment, String> userID;
     @FXML
@@ -61,11 +59,11 @@ public class AppointmentController implements Initializable {
     @FXML
     public Label titleLabel;
     @FXML
-            public RadioButton weeklyRadio;
+    public RadioButton weeklyRadio;
     @FXML
-            public RadioButton monthlyRadio;
-@FXML
-        public RadioButton allRadio;
+    public RadioButton monthlyRadio;
+    @FXML
+    public RadioButton allRadio;
     ZonedDateTime today = ZonedDateTime.now();
 
     public static int toAdd = 0;
@@ -75,7 +73,6 @@ public class AppointmentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
 
         appID.setCellValueFactory(new PropertyValueFactory<>("id"));
         appTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -87,23 +84,33 @@ public class AppointmentController implements Initializable {
         appEnd.setCellValueFactory(new PropertyValueFactory<>("formattedEndTime"));
         custID.setCellValueFactory(new PropertyValueFactory<>("cid"));
         userID.setCellValueFactory(new PropertyValueFactory<>("uid"));
+
         AppointmentMgmt.setAppointments();
         appointmentView.setItems(AppointmentMgmt.getAppointments());
 
+        /**
+         * Lambda expression to handle when the radio button for "All" is pressed
+         * showing all appointments
+         */
         allRadio.setOnAction(e->{
-
             appointmentView.setItems(AppointmentMgmt.getAppointments());
         });
 
+        /**
+         * Lambda expression to handle when the radio button for "weekly" is pressed
+         * only showing appointments by week
+         */
         weeklyRadio.setOnAction(e->{
-            System.out.println(today.getDayOfMonth());
             FilteredList<Appointment> filtered = new FilteredList<>(AppointmentMgmt.getAppointments());
-            System.out.println(today.plus(Period.ofWeeks(1)));
             filtered.setPredicate(p->  p.getStartTime().isAfter(today.now()) && p.getStartTime().isBefore(today.plus(Period.ofWeeks(1))));
 
             appointmentView.setItems(filtered);
         });
 
+        /**
+         * Lambda expression to handle when the radio button for "monthly" is pressed
+         * only showing appointments by month
+         */
         monthlyRadio.setOnAction(e->{
             monthToAdd = today.getMonthValue();
             FilteredList<Appointment> filtered = new FilteredList<>(AppointmentMgmt.getAppointments());
@@ -113,27 +120,27 @@ public class AppointmentController implements Initializable {
             appointmentView.setItems(filtered);
         });
 
-
-
+        /**
+         * Lambda expression to handle when the next button is pressed
+         */
         next.setOnAction(e->{
             if(weeklyRadio.isSelected()){
                 toAdd += 1;
                 filterWeekly(toAdd);
             }
             if(monthlyRadio.isSelected()) {
-
-
                 if(monthToAdd != 12) {
                     monthToAdd += 1;
                 }
                 else{monthToAdd =1;}
 
-
-                System.out.println(monthToAdd);
                 filterMonthly(monthToAdd);
             }
         });
 
+        /**
+         * Lambda expression to handle when the previous button is pressed
+         */
         previous.setOnAction(e->{
             if(monthlyRadio.isSelected()) {
                 if (monthToAdd != 1) {
@@ -147,8 +154,6 @@ public class AppointmentController implements Initializable {
                 filterMonthly(monthToAdd);
             }
 
-
-
             if(weeklyRadio.isSelected()) {
                 filterWeekly(toAdd);
                 if(toAdd >= 0) {
@@ -157,6 +162,9 @@ public class AppointmentController implements Initializable {
             }
         });
 
+        /**
+         * Lambda expression to handle when the delete button is pressed
+         */
         delete.setOnAction(e->{
             selectedAppointment = appointmentView.getSelectionModel().getSelectedItem();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -174,6 +182,9 @@ public class AppointmentController implements Initializable {
 
         });
 
+        /**
+         * Lambda expression to handle when the add button is pressed
+         */
         add.setOnAction(e -> {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("../Views/AddAppointmentForm.fxml"));
@@ -190,6 +201,9 @@ public class AppointmentController implements Initializable {
             }
         });
 
+        /**
+         * Lambda expression to handle when the update button is pressed
+         */
         update.setOnAction(e -> {
             selectedAppointment = appointmentView.getSelectionModel().getSelectedItem();
             try {
@@ -212,22 +226,28 @@ public class AppointmentController implements Initializable {
 
     }
 
-
-
+    /**
+     * Increments or decrements when next or previous are pressed, selecting appointsments by week
+     * @param numToAdd
+     */
     public void filterWeekly(int numToAdd){
         int toAdd = numToAdd;
         FilteredList<Appointment> filtered = new FilteredList<>(AppointmentMgmt.getAppointments());
-        System.out.println(today.plus(Period.ofWeeks(1)));
+        /**
+         * Lambda expression to set the predicate for the filtered list
+         */
         filtered.setPredicate(p-> p.getStartTime().isAfter(today.plus(Period.ofWeeks(toAdd))) && p.getStartTime().isBefore(today.plus(Period.ofWeeks(toAdd+1))));
         appointmentView.setItems(filtered);
-        //filtered.setPredicate(p-> p.getStartTime().getDayOfMonth() >= today.getDayOfMonth() && p.getStartTime().isBefore(today.plus(Period.ofWeeks(1))) && p.getStartTime().getMonth() == today.getMonth());
+
     }
 
     public void filterMonthly(int numToAdd){
         int toAdd = numToAdd;
         FilteredList<Appointment> filtered = new FilteredList<>(AppointmentMgmt.getAppointments());
+        /**
+         * Lambda expression to set the predicate for the filtered list
+         */
         filtered.setPredicate(p-> p.getStartTime().getMonthValue() == toAdd && p.getStartTime().isAfter(today.now()));
-        //filtered.setPredicate(p->  p.getStartTime().isAfter(today.plus(Period.ofMonths(toAdd))) && p.getStartTime().isBefore(today.plus((Period.ofMonths(toAdd+1)))));
 
         appointmentView.setItems(filtered);
     }

@@ -5,10 +5,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.Contact;
 import model.ContactReport;
 import model.ReportByMonth;
-import model.ReportByType;
 import util.AppointmentMgmt;
 import util.ContactMgmt;
 

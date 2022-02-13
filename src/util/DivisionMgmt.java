@@ -1,9 +1,10 @@
+/**
+ * Gets and manages the information for divisions from the database
+ */
 package util;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
-import model.Country;
 import model.Division;
 import model.JDBC;
 
@@ -19,6 +20,11 @@ public class DivisionMgmt {
         return divisions;
     }
 
+    /**
+     * Gets division id by the passed name
+     * @param name
+     * @return int
+     */
     public static int getDivisionID(String name){
         for(Division division : divisions){
             if(division.getName() == name){
@@ -28,6 +34,11 @@ public class DivisionMgmt {
         return 0;
     }
 
+    /**
+     * Returns division name from the passed id
+     * @param id
+     * @return String
+     */
     public static String getDivisionName(int id){
         for(Division division : divisions){
             if(division.getID() == id){
@@ -37,6 +48,11 @@ public class DivisionMgmt {
          return "";
     }
 
+    /**
+     * Returns the country name from the passed id
+     * @param id
+     * @return int
+     */
     public static int getCountryName(int id){
         for(Division division : divisions){
             if(division.getID() == id){
@@ -46,6 +62,9 @@ public class DivisionMgmt {
         return -1;
     }
 
+    /**
+     * Gets the division information from the database and adds it to the divisions list
+     */
     public static void setDivisions(){
         try {
 
@@ -56,9 +75,8 @@ public class DivisionMgmt {
                 String divisionName = rs.getString("Division");
                 int id = rs.getInt("Division_ID");
                 int cid = rs.getInt("Country_ID");
-                //int id = rs.getInt("Customer_ID");
+
                 Division newDivision = new Division(divisionName, id);
-                //newCountry.setCustID(id);
                 newDivision.setName(divisionName);
                 newDivision.setCountryID(cid);
                 newDivision.setID(id);

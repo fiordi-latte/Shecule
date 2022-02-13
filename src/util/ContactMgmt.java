@@ -1,9 +1,11 @@
+/**
+ * Manages all contact information
+ */
 package util;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Contact;
-import model.Country;
 import model.JDBC;
 
 import java.sql.*;
@@ -23,6 +25,9 @@ public class ContactMgmt {
         return contactNames;
     }
 
+    /**
+     * gets a list of only contacts names
+     */
     public static void setContactNames(){
         for(Contact contact : contacts){
             contactNames.add(contact.getName());
@@ -30,6 +35,11 @@ public class ContactMgmt {
 
     }
 
+    /**
+     * gets contact name
+     * @param id
+     * @return String
+     */
     public static String getContactNameByID(int id){
         for(Contact contact : contacts){
             if(contact.getID() == id){
@@ -39,6 +49,11 @@ public class ContactMgmt {
         return "";
     }
 
+    /**
+     * gets contact id by name
+     * @param name
+     * @return int
+     */
     public static int getContactID(String name){
         for(Contact contact : contacts){
             if(contact.getName().equals(name)){
@@ -48,6 +63,9 @@ public class ContactMgmt {
         return 0;
     }
 
+    /**
+     * pulls contact info from database and sets it to an observable list
+     */
     public static void setContacts(){
         try {
 

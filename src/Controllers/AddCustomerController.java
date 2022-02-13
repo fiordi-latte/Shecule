@@ -1,23 +1,19 @@
+/**
+ * Controller for the AddCustomer view
+ */
 package Controllers;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Country;
 import model.Customer;
 import model.Division;
-import model.JDBC;
 import util.CountryMgmt;
 import util.CustomerMgmt;
 import util.DivisionMgmt;
 import util.ErrorCheck;
 
-
-import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -26,13 +22,21 @@ import java.util.ResourceBundle;
 public class AddCustomerController implements Initializable {
     @FXML
     public TextField customerNameInput;
+    @FXML
     public TextField customerPhoneInput;
+    @FXML
     public TextField customerAddressInput;
+    @FXML
     public TextField customerZipCodeInput;
+    @FXML
     public ComboBox customerCountryInput;
+    @FXML
     public ComboBox<String> customerStateInput;
+    @FXML
     public Button saveButton;
+    @FXML
     public Button cancelButton;
+    @FXML
     private static String selectedCountryString;
     private Object selectedCountry;
     public String selectedDivision;
@@ -46,26 +50,22 @@ public class AddCustomerController implements Initializable {
         }
 
         /**
-         * Handles clicking on the country combobox and sets division combobox appropriately
+         * Lambda expression handles clicking on the country combobox and sets division combobox appropriately
          */
         customerCountryInput.setOnAction(e -> {
             customerStateInput.getSelectionModel().clearSelection();
             customerStateInput.getItems().clear();
 
             selectedIndex = customerCountryInput.getSelectionModel().getSelectedIndex();
-            System.out.println(selectedIndex);
+
             int cid = 0;
             if (selectedIndex == 0) {
-
                 cid = 1;
-
             }
             else if (selectedIndex == 1) {
-
                 cid = 2;
             }
             else if (selectedIndex == 2) {
-
                 cid = 3;
             }
             for (Division division : DivisionMgmt.getDivisions()) {
@@ -75,11 +75,17 @@ public class AddCustomerController implements Initializable {
             }
         });
 
+        /**
+         * Lambda expression to handle when the user sets the division combobox
+         */
         customerStateInput.setOnAction(e->{
            selectedDivision = customerStateInput.getValue();
 
         });
 
+        /**
+         * Lambda expression to handle when the cancel button is pressed
+         */
         cancelButton.setOnAction(e->{
             customerCountryInput.setValue(null);
             customerStateInput.setValue(null);
@@ -87,6 +93,9 @@ public class AddCustomerController implements Initializable {
             stage.close();
         });
 
+        /**
+         * Lambda expression to handle when the save button is preseed
+         */
         saveButton.setOnAction(e -> {
             int id;
             if(CustomerMgmt.getAllCustomers().isEmpty()){
@@ -94,16 +103,12 @@ public class AddCustomerController implements Initializable {
             }
             else {
                 id = CustomerMgmt.getAllCustomers().get(CustomerMgmt.getAllCustomers().size() - 1).getCustID() + 1;
-                System.out.println(id);
             }
-
-
 
                 String name = customerNameInput.getText();
                 String address = customerAddressInput.getText();
                 String phone = customerPhoneInput.getText();
                 String zip = customerZipCodeInput.getText();
-               // String divisionID = selectedDivision;
                 int divID = DivisionMgmt.getDivisionID(selectedDivision);
 
                 if(ErrorCheck.isEmpty(name) || ErrorCheck.isEmpty(address) || ErrorCheck.isEmpty(phone) || ErrorCheck.isEmpty(zip)){
@@ -134,8 +139,6 @@ public class AddCustomerController implements Initializable {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-
-
 
             Stage stage = (Stage) saveButton.getScene().getWindow();
             stage.close();

@@ -1,23 +1,19 @@
+/**
+ * Controller for the AddApointment view
+ */
 package Controllers;
 
-import com.sun.media.jfxmedia.events.NewFrameEvent;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointment;
-import model.Contact;
 import model.User;
-import org.w3c.dom.Text;
 import util.*;
-
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
 
 public class AddAppointmentController implements Initializable {
@@ -43,8 +39,6 @@ public class AddAppointmentController implements Initializable {
     public TextField customer;
     @FXML
     public Button cancel;
-    public ObservableList<String> contactNames;
-    private final DateTimeFormatter timePat = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
     int uid;
 
 
@@ -53,26 +47,26 @@ public class AddAppointmentController implements Initializable {
 
         contact.setItems(ContactMgmt.getContactNames());
 
-
-
         uid = User.getUserID(User.getCurrentUser());
 
-        System.out.println(uid);
-
+        /**
+         * lambda expression to handle when cancel is pressed
+         */
         cancel.setOnAction(e->{
             Stage stage = (Stage) cancel.getScene().getWindow();
             stage.close();
         });
 
+        /**
+         * lambda to handle when the save button is pressed
+         */
         save.setOnAction(e->{
             int id;
             if(AppointmentMgmt.getAppointments().isEmpty()){
                 id = 0;
             }
             else {
-                //Appointment appointment = AppointmentMgmt.getAppointments().get(-1);
                 id = AppointmentMgmt.getAppointments().get(AppointmentMgmt.getAppointments().size() - 1).getId() + 1;
-                //id = appointment.getId();
             }
             String title = appTitle.getText();
             String description = appDescription.getText();
@@ -91,7 +85,7 @@ public class AddAppointmentController implements Initializable {
                 newAlert.showAndWait();
                 return;
             }
-            //TODO OVERLAPPING CUSTOMERS
+
             int contactID = ContactMgmt.getContactID(contactName);
             int customerID = CustomerMgmt.getCustomerID(customerName);
 
@@ -112,22 +106,18 @@ public class AddAppointmentController implements Initializable {
             int hourStart = startLT.getHour();
             int hourEnd = endLT.getHour();
 
-
             boolean officeHours = hourStart >= 8 && hourEnd < 22;
             boolean startBeforeEnd = startLT.isBefore(endLT);
+
             if(!officeHours){
                 ErrorCheck.displayError("Hours must be between 08:00 and 22:00");
                 return;
             }
 
-
-
             if(!startBeforeEnd){
                 ErrorCheck.displayError("Start time must be before end time");
                 return;
             }
-
-
 
             LocalDateTime startLDT = LocalDateTime.of(date, LocalTime.parse(start));
             LocalDateTime endLDT = LocalDateTime.of(date, LocalTime.parse(end));
@@ -138,7 +128,6 @@ public class AddAppointmentController implements Initializable {
             }
 
             ZonedDateTime startTime = startLDT.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"));
-
             ZonedDateTime endTime = endLDT.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"));
 
             Appointment newAppointment = new Appointment();
@@ -166,11 +155,7 @@ public class AddAppointmentController implements Initializable {
             AppointmentMgmt.setAppointments();
             Stage stage = (Stage) save.getScene().getWindow();
             stage.close();
-
-
         });
-
-
     }
 
     /**
@@ -186,12 +171,9 @@ public class AddAppointmentController implements Initializable {
         ZonedDateTime endTime = end.atZone(ZoneId.systemDefault());
 
         for (Appointment appointment : AppointmentMgmt.getAppointments()){
-
             if(startTime.isAfter(appointment.getStartTime()) && startTime.isBefore(appointment.getEndTime()) || endTime.isAfter(appointment.getStartTime()) && endTime.isBefore(appointment.getEndTime())){
-                System.out.println(appointment.getStartTime());
                 if(appointment.getCid() == custId){
                     return true;
-
                 }
             }
         }

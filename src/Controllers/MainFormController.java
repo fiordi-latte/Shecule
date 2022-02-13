@@ -1,3 +1,6 @@
+/**
+ * Controller for the main form view AKA the customer view
+ */
 package Controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,8 +19,6 @@ import util.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 
@@ -39,7 +40,7 @@ public class MainFormController implements Initializable{
     @FXML
     public Button reports;
     public static ObservableList<Customer> customers = FXCollections.observableArrayList();
-    LocalDateTime time = LocalDateTime.now();
+
     private static Customer updateCustomer;
 
     @Override
@@ -50,7 +51,9 @@ public class MainFormController implements Initializable{
         ContactMgmt.setContacts();
         AppointmentMgmt.setAppointments();
 
-        //customerID.setCellValueFactory(new PropertyValueFactory<>("custId"));
+        /**
+         * Lambda expression to handle when the reports button is pressed
+         */
         reports.setOnAction(e->{
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("../Views/ReportsForm.fxml"));
@@ -67,6 +70,9 @@ public class MainFormController implements Initializable{
             }
         });
 
+        /**
+         * Lambda expression to handle when the appointments button is pressed
+         */
         appointments.setOnAction(e-> {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("../Views/AppointmentForm.fxml"));
@@ -83,9 +89,11 @@ public class MainFormController implements Initializable{
             }
         });
 
+        /**
+         * Lambda expression to handle when the update button is pressed
+         */
         updateCust.setOnAction(e -> {
             updateCustomer = customerView.getSelectionModel().getSelectedItem();
-
 
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("../Views/UpdateCustomer.fxml"));
@@ -102,13 +110,15 @@ public class MainFormController implements Initializable{
             }
         });
 
+        /**
+         * Lambda expression to handle when the delete button is pressed
+         */
         deleteCust.setOnAction(e -> {
             updateCustomer = customerView.getSelectionModel().getSelectedItem();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("Are you sure you want to delete?");
             alert.showAndWait().ifPresent(response -> {
                 if(response == ButtonType.OK) {
-
                     try {
                         CustomerMgmt.deleteCustomer(updateCustomer);
                     } catch (SQLException ex) {
@@ -118,6 +128,9 @@ public class MainFormController implements Initializable{
             });
         });
 
+        /**
+         * Lambda expression to handle when the add button is pressed
+         */
         addCust.setOnAction(e -> {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("../Views/AddCustomer.fxml"));

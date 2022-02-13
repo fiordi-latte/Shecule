@@ -1,3 +1,7 @@
+/**
+ * Controller for the login view
+ */
+
 package Controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +18,6 @@ import model.JDBC;
 import model.User;
 import util.ErrorCheck;
 
-
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -25,7 +28,6 @@ import java.nio.file.StandardOpenOption;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -48,7 +50,6 @@ public class LoginController implements Initializable {
     public TextField passwordInput;
     @FXML
     public Label zoneId;
-    @FXML
 
     public ZoneId currentZoneId = ZoneId.systemDefault();
 

@@ -1,3 +1,6 @@
+/**
+ * Gets and manages all customer information from the database
+ */
 package util;
 
 import javafx.collections.FXCollections;
@@ -18,6 +21,11 @@ public class CustomerMgmt {
         return allCustomers;
     }
 
+    /**
+     * Inserts the customer into the database and adds it to the observable list
+     * @param customer
+     * @throws SQLException
+     */
     public static void addCustomer(Customer customer) throws SQLException {
         String query = "INSERT INTO customers VALUES ('"+customer.getCustID()+"', '"+customer.getCustName()+"', '" + customer.getCustAdress() + "', '" + customer.getCustZip() + "','" +customer.getCustPhone()+ "', '"
         + now + "',' "+ User.getCurrentUser() +"' ,'" + now +"', '"+ User.getCurrentUser() +"', '" + customer.getCustDiv() + "')";
@@ -29,6 +37,11 @@ public class CustomerMgmt {
         allCustomers.add(customer);
     }
 
+    /**
+     * updates the selected customer in the database and sets them to the observable list
+     * @param customer
+     * @throws SQLException
+     */
     public static void updateCustomer(Customer customer) throws SQLException {
         String query = "UPDATE customers set Customer_Name = '" +customer.getCustName()+"', Address = '" + customer.getCustAdress() + "', Postal_Code = '" + customer.getCustZip() + "', Phone = '" +customer.getCustPhone()+ "', Last_Update = '"
                  + now +"', Last_Updated_By = '"+ User.getCurrentUser() +"', Division_ID = '" + customer.getCustDiv() + "' WHERE Customer_ID = '" + customer.getCustID() + "'";
@@ -40,6 +53,11 @@ public class CustomerMgmt {
         allCustomers.set(i, customer);
     }
 
+    /**
+     * Delete customer from database and remove from the list
+     * @param customer
+     * @throws SQLException
+     */
     public static void deleteCustomer(Customer customer) throws SQLException {
         String query = "DELETE FROM customers where Customer_ID = '" + customer.getCustID() + "'";
         PreparedStatement sm = conn.prepareStatement(query);
@@ -47,6 +65,12 @@ public class CustomerMgmt {
         int i = allCustomers.indexOf(customer);
         allCustomers.remove(i);
     }
+
+    /**
+     * gets the customer id by the passed name
+     * @param name
+     * @return int
+     */
 
     public static int getCustomerID(String name){
         for(Customer customer : allCustomers){
@@ -57,6 +81,11 @@ public class CustomerMgmt {
         return 0;
     }
 
+    /**
+     * gets the customer name by the passed id
+     * @param id
+     * @return String
+     */
     public static String getCustomerNameByID(int id){
         for(Customer customer : allCustomers){
             if(customer.getCustID() == id){
@@ -66,6 +95,10 @@ public class CustomerMgmt {
         return "Not found";
     }
 
+    /**
+     * gets and set the customer information from the database into a list
+     * @return ObservableList
+     */
     public static ObservableList<Customer> getCustomers() {
         try {
 
