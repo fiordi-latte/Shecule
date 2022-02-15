@@ -32,8 +32,7 @@ import java.util.ResourceBundle;
 import static java.util.Locale.FRANCE;
 
 /**
- * @Author Andrew Rusnac
- * Controller for the login view
+ * Controller for the login view<br>
  * Lambda expressions are used for GUI interactions to simplify the code and make it more readable
  * the lambdas also allow for flexibility and reuse
  */

@@ -21,9 +21,9 @@ import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 
 /**
- * @Author Andrew Rusnac
- * Controller for the main appointment view.
+ * Controller for the main appointment view. <br>
  * Lambda expressions are used to simplify the code for GUI interactions. Saving time while also making the code more readable
+ * lambda expressions allow for reuse and flexibility
  */
 
 public class AppointmentController implements Initializable {

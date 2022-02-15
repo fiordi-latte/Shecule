@@ -14,8 +14,8 @@ import java.time.*;
 import java.util.ResourceBundle;
 
 /**
- * @Author Andrew Rusnac
- * Controller for the AddApointment view
+ *
+ * Controller for the AddApointment view<br>
  * Lambda expressions are used for GUI interactions to simplify the code and make it more readable
  * the lambdas also allow for flexibility and reuse
  */

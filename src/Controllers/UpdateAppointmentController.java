@@ -18,8 +18,7 @@ import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
 
 /**
- * @Author Andrew Rusnac
- * Controller for the update appointment view
+ * Controller for the update appointment view<br>
  * Lambda expressions are used to simplify the code for GUI interactions making it more readable and saving time
  * the lambdas also allow for flexibility and reuse
  */

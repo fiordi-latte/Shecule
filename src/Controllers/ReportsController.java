@@ -15,8 +15,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /**
- * @Author Andrew Rusnac
- * Controller for the reports view
+ * Controller for the reports view <br>
  * Lambda expressions below are used for GUI interactions to simplify the code and make it more readable while saving time
  * the lambdas also allow for flexibility and reuse
  */
