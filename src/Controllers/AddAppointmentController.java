@@ -47,7 +47,7 @@ public class AddAppointmentController implements Initializable {
 
         contact.setItems(ContactMgmt.getContactNames());
 
-        uid = User.getUserID(User.getCurrentUser());
+        uid = UserMgmt.getUserID(User.getCurrentUser());
 
         /**
          * lambda expression to handle when cancel is pressed
@@ -171,7 +171,9 @@ public class AddAppointmentController implements Initializable {
         ZonedDateTime endTime = end.atZone(ZoneId.systemDefault());
 
         for (Appointment appointment : AppointmentMgmt.getAppointments()){
-            if(startTime.isAfter(appointment.getStartTime()) && startTime.isBefore(appointment.getEndTime()) || endTime.isAfter(appointment.getStartTime()) && endTime.isBefore(appointment.getEndTime())){
+
+            if(startTime.isAfter(appointment.getStartTime()) && startTime.isBefore(appointment.getEndTime()) || endTime.isAfter(appointment.getStartTime()) && endTime.isBefore(appointment.getEndTime()) || startTime.isEqual(appointment.getStartTime())){
+                System.out.println(appointment.getStartTime());
                 if(appointment.getCid() == custId){
                     return true;
                 }

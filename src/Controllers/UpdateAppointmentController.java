@@ -10,10 +10,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointment;
 import model.User;
-import util.AppointmentMgmt;
-import util.ContactMgmt;
-import util.CustomerMgmt;
-import util.ErrorCheck;
+import util.*;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -53,7 +50,7 @@ public class UpdateAppointmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         selectedApp = AppointmentController.getSelectedAppointment();
-        uid = User.getUserID(User.getCurrentUser());
+        uid = UserMgmt.getUserID(User.getCurrentUser());
 
         /**
          * get and fill the contact of selected appointment

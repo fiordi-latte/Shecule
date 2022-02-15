@@ -13,12 +13,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Appointment;
 import model.Customer;
+import model.User;
 import util.*;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 
 
@@ -28,7 +31,7 @@ public class MainFormController implements Initializable{
     @FXML
     public TableColumn<Customer, String> customerName;
     @FXML
-    public TableColumn<Customer, Integer> customerID;
+    public TableColumn<Customer, Integer> custId;
     @FXML
     public Button addCust;
     @FXML
@@ -39,6 +42,14 @@ public class MainFormController implements Initializable{
     public Button deleteCust;
     @FXML
     public Button reports;
+    @FXML
+    public TableColumn<Customer, String> custPhone;
+    @FXML
+    public TableColumn<Customer, String> custAddress;
+    @FXML
+    public TableColumn<Customer, String> custPost;
+    @FXML
+    public TableColumn<Customer, Integer> custDivision;
     public static ObservableList<Customer> customers = FXCollections.observableArrayList();
 
     private static Customer updateCustomer;
@@ -49,8 +60,9 @@ public class MainFormController implements Initializable{
         DivisionMgmt.setDivisions();
         CustomerMgmt.getCustomers();
         ContactMgmt.setContacts();
-        AppointmentMgmt.setAppointments();
 
+        AppointmentMgmt.setAppointments();
+        upcomingAppointmentAlert();
         /**
          * Lambda expression to handle when the reports button is pressed
          */
@@ -149,12 +161,29 @@ public class MainFormController implements Initializable{
 
         customerName.setCellValueFactory(new PropertyValueFactory<>("custName"));
 
+        custId.setCellValueFactory(new PropertyValueFactory<>("custId"));
+        custPhone.setCellValueFactory(new PropertyValueFactory<>("custPhone"));
+        custAddress.setCellValueFactory(new PropertyValueFactory<>("custAddress"));
+        custPost.setCellValueFactory(new PropertyValueFactory<>("custZip"));
+        custDivision.setCellValueFactory(new PropertyValueFactory<>("custDiv"));
+
         customerView.setItems(CustomerMgmt.allCustomers);
 
     }
 
     public static Customer getCustomer(){
         return updateCustomer;
+    }
+
+    public static void upcomingAppointmentAlert(){
+        for(Appointment app : AppointmentMgmt.getAppointments()){
+            if(app.getLocalStartTime().isAfter(ZonedDateTime.now()) && app.getLocalStartTime().isBefore((ZonedDateTime.now().plusMinutes(15)))){
+                ErrorCheck.displayAlert("Upcoming appointment at "+ app.getFormattedStartTime() + " ID: " + app.getId());
+                return;
+            }
+        }
+        ErrorCheck.displayAlert("No upcoming appointments");
+        return;
     }
 
 }

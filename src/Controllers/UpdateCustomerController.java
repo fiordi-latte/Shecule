@@ -43,7 +43,7 @@ public class UpdateCustomerController implements Initializable {
         updateCustomer = MainFormController.getCustomer();
         customerNameInput.setText(updateCustomer.getCustName());
         customerPhoneInput.setText(updateCustomer.getCustPhone());
-        customerAddressInput.setText(updateCustomer.getCustAdress());
+        customerAddressInput.setText(updateCustomer.getCustAddress());
         customerZipCodeInput.setText(updateCustomer.getCustZip());
 
         customerCountryInput.getSelectionModel().select(updateCustomer.getCustCid());
@@ -166,12 +166,14 @@ public class UpdateCustomerController implements Initializable {
                 Alert newAlert = new Alert(Alert.AlertType.ERROR);
                 newAlert.setContentText("Fill all required fields");
                 newAlert.showAndWait();
+                return;
             }
 
             if(!ErrorCheck.isInt(zip) || !ErrorCheck.isInt(phone)){
                 Alert newAlert = new Alert(Alert.AlertType.ERROR);
                 newAlert.setContentText("Please enter only numbers in the phone and zip code fields");
                 newAlert.showAndWait();
+                return;
             }
 
             updateCustomer.setCustName(name);

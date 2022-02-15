@@ -3,7 +3,7 @@ import java.time.LocalDateTime;
 
 public class Customer {
 
-    private int custID;
+    private int custId;
     private String custName;
     private String custAddress;
     private String custZip;
@@ -34,11 +34,14 @@ public class Customer {
     }
 
     public void setCustID(int id){
-        this.custID = id;
+        this.custId = id;
     }
 
     public int getCustID(){
-        return custID;
+        return custId;
+    }
+    public int getCustId(){
+        return custId;
     }
 
     public void setCustAddress(String address){
@@ -53,7 +56,7 @@ public class Customer {
         return custZip;
     }
 
-    public String getCustAdress(){
+    public String getCustAddress(){
         return custAddress;
     }
 

@@ -45,4 +45,12 @@ public class ErrorCheck {
 
     }
 
+    public static void displayAlert(String message){
+        Alert invalidIput = new Alert(Alert.AlertType.INFORMATION);
+        invalidIput.setTitle("Appointment alert");
+        invalidIput.setContentText(message);
+        invalidIput.showAndWait();
+
+    }
+
 }

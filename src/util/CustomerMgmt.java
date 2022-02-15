@@ -27,7 +27,7 @@ public class CustomerMgmt {
      * @throws SQLException
      */
     public static void addCustomer(Customer customer) throws SQLException {
-        String query = "INSERT INTO customers VALUES ('"+customer.getCustID()+"', '"+customer.getCustName()+"', '" + customer.getCustAdress() + "', '" + customer.getCustZip() + "','" +customer.getCustPhone()+ "', '"
+        String query = "INSERT INTO customers VALUES ('"+customer.getCustID()+"', '"+customer.getCustName()+"', '" + customer.getCustAddress() + "', '" + customer.getCustZip() + "','" +customer.getCustPhone()+ "', '"
         + now + "',' "+ User.getCurrentUser() +"' ,'" + now +"', '"+ User.getCurrentUser() +"', '" + customer.getCustDiv() + "')";
 
         PreparedStatement sm = conn.prepareStatement(query);
@@ -43,7 +43,7 @@ public class CustomerMgmt {
      * @throws SQLException
      */
     public static void updateCustomer(Customer customer) throws SQLException {
-        String query = "UPDATE customers set Customer_Name = '" +customer.getCustName()+"', Address = '" + customer.getCustAdress() + "', Postal_Code = '" + customer.getCustZip() + "', Phone = '" +customer.getCustPhone()+ "', Last_Update = '"
+        String query = "UPDATE customers set Customer_Name = '" +customer.getCustName()+"', Address = '" + customer.getCustAddress() + "', Postal_Code = '" + customer.getCustZip() + "', Phone = '" +customer.getCustPhone()+ "', Last_Update = '"
                  + now +"', Last_Updated_By = '"+ User.getCurrentUser() +"', Division_ID = '" + customer.getCustDiv() + "' WHERE Customer_ID = '" + customer.getCustID() + "'";
         PreparedStatement sm = conn.prepareStatement(query);
         sm.executeUpdate(query);

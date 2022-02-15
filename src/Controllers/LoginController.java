@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import model.JDBC;
 import model.User;
 import util.ErrorCheck;
+import util.UserMgmt;
 
 import java.io.*;
 import java.net.URL;
@@ -64,6 +65,14 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Locale.setDefault(FRANCE);
+        try {
+            UserMgmt.setUsers();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        for(User user : UserMgmt.getUserList()){
+            System.out.println("id = " +  user.getID() + "name " + user.getUserName());
+        }
         String zid = currentZoneId.toString();
         try {
             resourceBundle = ResourceBundle.getBundle("Properties.login", Locale.getDefault());
@@ -82,6 +91,7 @@ public class LoginController implements Initializable {
         loginButton.setOnAction(e -> {
             String userName = userNameInput.getText();
             String password = passwordInput.getText();
+            System.out.println(userNameInput.getText());
 
             if(ErrorCheck.isEmpty(userName) || ErrorCheck.isEmpty(password)){
                 ErrorCheck.displayError(finalResourceBundle.getString("empty"));
@@ -90,6 +100,8 @@ public class LoginController implements Initializable {
 
             if(verifyLogin(userName, password)){
                 User.setCurrentUser(userNameInput.getText());
+
+
                 String toWrite = "Successful login by '"+ User.getCurrentUser() +"' at '" + LocalDateTime.now() +"'";
                 Path file = Paths.get("login-activity.txt");
                 try {
@@ -132,7 +144,8 @@ public class LoginController implements Initializable {
             ResultSet rs = sm.executeQuery("SELECT * FROM USERS WHERE User_Name = '" + userName + "' AND Password = '"+ password + "'");
             if(rs.next()){
                 String user = rs.getString("User_Name");
-                User.setUsers();
+
+
 
                 return Boolean.TRUE;
             }

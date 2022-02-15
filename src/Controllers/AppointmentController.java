@@ -168,7 +168,7 @@ public class AppointmentController implements Initializable {
         delete.setOnAction(e->{
             selectedAppointment = appointmentView.getSelectionModel().getSelectedItem();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Are you sure you want to delete?");
+            alert.setContentText("Are you sure you want to delete? Appointment ID: " + selectedAppointment.getId() + " Type: " + selectedAppointment.getType());
             alert.showAndWait().ifPresent(response -> {
                 if(response == ButtonType.OK) {
 
