@@ -1,6 +1,3 @@
-/**
- * Controller for the update customer view
- */
 package Controllers;
 
 import javafx.fxml.FXML;
@@ -22,6 +19,11 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
+
+/**
+ * Controller for the update customer view
+ * Lambda expressions are used to simplify the code and make it more readable while saving time
+ */
 
 public class UpdateCustomerController implements Initializable {
     @FXML

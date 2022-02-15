@@ -1,7 +1,8 @@
+package util;
+
 /**
  * Gets and manages the information for divisions from the database
  */
-package util;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

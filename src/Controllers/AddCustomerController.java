@@ -1,6 +1,3 @@
-/**
- * Controller for the AddCustomer view
- */
 package Controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +15,11 @@ import java.net.URL;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
+
+/**
+ * Controller for the AddCustomer view
+ * Lambda expressions are used for GUI interactions to simplify the code and make it more readable
+ */
 
 public class AddCustomerController implements Initializable {
     @FXML

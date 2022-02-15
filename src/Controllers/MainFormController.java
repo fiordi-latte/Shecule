@@ -1,6 +1,3 @@
-/**
- * Controller for the main form view AKA the customer view
- */
 package Controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +21,10 @@ import java.sql.SQLException;
 import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the main form view AKA the customer view
+ * Lambda expressions are used for GUI interactions to simplify the code and make it more readable, while also saving time
+ */
 
 public class MainFormController implements Initializable{
     @FXML

@@ -1,6 +1,4 @@
-/**
- * Controller for the update appointment view
- */
+
 package Controllers;
 
 import javafx.collections.ObservableList;
@@ -18,6 +16,11 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
+
+/**
+ * Controller for the update appointment view
+ * Lambda expressions are used to simplify the code for GUI interactions making it more readable and saving time
+ */
 
 public class UpdateAppointmentController implements Initializable {
 

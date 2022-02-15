@@ -1,6 +1,3 @@
-/**
- * Manages country information from database and list
- */
 package util;
 
 import javafx.collections.FXCollections;
@@ -9,6 +6,10 @@ import model.Country;
 import model.JDBC;
 
 import java.sql.*;
+
+/**
+ * Manages country information from database and list
+ */
 
 public class CountryMgmt {
 

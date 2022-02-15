@@ -1,9 +1,4 @@
-/**
- * Controller for the login view
- */
-
 package Controllers;
-import com.sun.javafx.runtime.VersionInfo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -34,9 +29,13 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import static com.sun.javafx.runtime.VersionInfo.getRuntimeVersion;
-import static com.sun.javafx.runtime.VersionInfo.getVersion;
 import static java.util.Locale.FRANCE;
+
+/**
+ * Controller for the login view
+ * Lambda expressions are used for GUI interactions to simplify the code and make it more readable
+ */
+
 
 
 public class LoginController implements Initializable {

@@ -1,6 +1,3 @@
-/**
- * Controller for the reports view
- */
 package Controllers;
 
 import javafx.fxml.FXML;
@@ -16,6 +13,11 @@ import util.ContactMgmt;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+/**
+ * Controller for the reports view
+ * Lambda expressions below are used for GUI interactions to simplify the code and make it more readable while saving time
+ */
 
 public class ReportsController implements Initializable {
     @FXML

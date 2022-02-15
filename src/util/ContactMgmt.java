@@ -1,7 +1,8 @@
+package util;
+
 /**
  * Manages all contact information
  */
-package util;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

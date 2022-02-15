@@ -1,6 +1,3 @@
-/**
- * Controller for the main appointment view
- */
 package Controllers;
 
 import javafx.collections.transformation.FilteredList;
@@ -22,6 +19,11 @@ import java.sql.SQLException;
 import java.time.Period;
 import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
+
+/**
+ * Controller for the main appointment view.
+ * Lambda expressions are used to simplify the code for GUI interactions. Saving time while also making the code more readable
+ */
 
 public class AppointmentController implements Initializable {
     @FXML
@@ -246,6 +248,9 @@ public class AppointmentController implements Initializable {
         FilteredList<Appointment> filtered = new FilteredList<>(AppointmentMgmt.getAppointments());
         /**
          * Lambda expression to set the predicate for the filtered list
+         * Used because it makes the code much more compact and simple
+         * which makes it more readable and saves time in coding.
+         * This interface is also only used here
          */
         filtered.setPredicate(p-> p.getStartTime().getMonthValue() == toAdd && p.getStartTime().isAfter(today.now()));
 

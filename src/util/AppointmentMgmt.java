@@ -1,7 +1,8 @@
-/**
- * Manages appointment database and appointment list interactions
- */
 package util;
+
+/**
+ * Controller for the update customer view
+ */
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,8 +34,7 @@ public class AppointmentMgmt {
     public static void addAppointment(Appointment appointment) throws SQLException {
         LocalDateTime start = LocalDateTime.from(appointment.getStartTime());
         LocalDateTime end = LocalDateTime.from(appointment.getEndTime());
-        System.out.println(User.getCurrentUser());
-        System.out.println(appointment.getUid());
+
         String query = "INSERT INTO appointments VALUES ('"+appointment.getId()+"', '"+appointment.getTitle()+"', '" + appointment.getDescription() + "', '" + appointment.getLocation() + "','" +appointment.getType()+ "', '"
                 + Timestamp.valueOf(start) + "',' "+ Timestamp.valueOf(end) +"' ,'" + now +"', '"+ User.getCurrentUser() +"', '" + now + "','"  + User.getCurrentUser() + "','" + appointment.getCid() +"','" + appointment.getUid() + "','" + appointment.getContactID() +"')";
 

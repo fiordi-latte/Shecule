@@ -1,6 +1,3 @@
-/**
- * Controller for the AddApointment view
- */
 package Controllers;
 
 import javafx.fxml.FXML;
@@ -15,6 +12,11 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.*;
 import java.util.ResourceBundle;
+
+/**
+ * Controller for the AddApointment view
+ * Lambda expressions are used for GUI interactions to simplify the code and make it more readable
+ */
 
 public class AddAppointmentController implements Initializable {
     @FXML

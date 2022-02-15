@@ -1,6 +1,3 @@
-/**
- * Gets and manages all customer information from the database
- */
 package util;
 
 import javafx.collections.FXCollections;
@@ -11,6 +8,11 @@ import model.User;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+
+
+/**
+ * Gets and manages all customer information from the database
+ */
 
 public class CustomerMgmt {
     public static LocalDateTime now = LocalDateTime.now();
