@@ -22,8 +22,10 @@ import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 
 /**
+ * @Author Andrew Rusnac
  * Controller for the main form view AKA the customer view
  * Lambda expressions are used for GUI interactions to simplify the code and make it more readable, while also saving time
+ * the lambdas also allow for flexibility and reuse
  */
 
 public class MainFormController implements Initializable{
@@ -127,19 +129,38 @@ public class MainFormController implements Initializable{
          * Lambda expression to handle when the delete button is pressed
          */
         deleteCust.setOnAction(e -> {
+            /**
+             * First check if the customer has any existing appointments
+             */
+            Boolean hasAppointments = false;
             updateCustomer = customerView.getSelectionModel().getSelectedItem();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Are you sure you want to delete?");
-            alert.showAndWait().ifPresent(response -> {
-                if(response == ButtonType.OK) {
-                    try {
-                        CustomerMgmt.deleteCustomer(updateCustomer);
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
-                    }
+            for(Appointment app : AppointmentMgmt.getAppointments()){
+                if (app.getCid() == updateCustomer.getCustID()){
+                    ErrorCheck.displayError("Please cancel appointments associated with this customer before deletion");
+                    hasAppointments = true;
+                    break;
                 }
-            });
+
+            }
+            /**
+             * if not confirm removal
+             */
+
+            if(!hasAppointments) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setContentText("Are you sure you want to delete?");
+                alert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.OK) {
+                        try {
+                            CustomerMgmt.deleteCustomer(updateCustomer);
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+            }
         });
+
 
         /**
          * Lambda expression to handle when the add button is pressed
@@ -176,6 +197,9 @@ public class MainFormController implements Initializable{
         return updateCustomer;
     }
 
+    /**
+     * Alert for whether there are upcoming appointments in the next 15 minutes
+     */
     public static void upcomingAppointmentAlert(){
         for(Appointment app : AppointmentMgmt.getAppointments()){
             if(app.getLocalStartTime().isAfter(ZonedDateTime.now()) && app.getLocalStartTime().isBefore((ZonedDateTime.now().plusMinutes(15)))){

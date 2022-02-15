@@ -1,9 +1,5 @@
 package util;
 
-/**
- * Controller for the update customer view
- */
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.*;
@@ -12,6 +8,10 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+
+/**
+ * Class used to get and manipulate data from the database
+ */
 
 public class AppointmentMgmt {
 

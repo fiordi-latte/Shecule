@@ -21,6 +21,7 @@ import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 
 /**
+ * @Author Andrew Rusnac
  * Controller for the main appointment view.
  * Lambda expressions are used to simplify the code for GUI interactions. Saving time while also making the code more readable
  */
@@ -247,10 +248,11 @@ public class AppointmentController implements Initializable {
         int toAdd = numToAdd;
         FilteredList<Appointment> filtered = new FilteredList<>(AppointmentMgmt.getAppointments());
         /**
+         * @Author Andrew Rusnac
          * Lambda expression to set the predicate for the filtered list
          * Used because it makes the code much more compact and simple
          * which makes it more readable and saves time in coding.
-         * This interface is also only used here
+         * This interface is also only used here but allows for reuse and flexibility
          */
         filtered.setPredicate(p-> p.getStartTime().getMonthValue() == toAdd && p.getStartTime().isAfter(today.now()));
 

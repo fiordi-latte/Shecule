@@ -32,8 +32,10 @@ import java.util.ResourceBundle;
 import static java.util.Locale.FRANCE;
 
 /**
+ * @Author Andrew Rusnac
  * Controller for the login view
  * Lambda expressions are used for GUI interactions to simplify the code and make it more readable
+ * the lambdas also allow for flexibility and reuse
  */
 
 
@@ -87,6 +89,7 @@ public class LoginController implements Initializable {
         }
 
         ResourceBundle finalResourceBundle = resourceBundle;
+
         loginButton.setOnAction(e -> {
             String userName = userNameInput.getText();
             String password = passwordInput.getText();
@@ -131,7 +134,9 @@ public class LoginController implements Initializable {
 
 
     /**
-     * Verifies that the passed credentials are found in the database
+     * Verifies that the passed credentials are found in the database, additionally writes to
+     * login-activity.txt with all login attempts
+     *
      * @param userName
      * @param password
      * @return Boolean

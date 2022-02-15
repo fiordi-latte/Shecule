@@ -1,8 +1,5 @@
 package util;
 
-/**
- * Manages all contact information
- */
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,6 +7,10 @@ import model.Contact;
 import model.JDBC;
 
 import java.sql.*;
+
+/**
+ * Class used to get and manipulate data from the database
+ */
 
 public class ContactMgmt {
     Statement sm = null;

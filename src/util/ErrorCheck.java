@@ -45,6 +45,10 @@ public class ErrorCheck {
 
     }
 
+    /**
+     * Shows the dialog box for upcoming appointments called from MainFormController
+     * @param message
+     */
     public static void displayAlert(String message){
         Alert invalidIput = new Alert(Alert.AlertType.INFORMATION);
         invalidIput.setTitle("Appointment alert");

@@ -21,8 +21,10 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 /**
+ * @Author Andrew Rusnac
  * Controller for the update customer view
  * Lambda expressions are used to simplify the code and make it more readable while saving time
+ * the lambdas also allow for flexibility and reuse
  */
 
 public class UpdateCustomerController implements Initializable {

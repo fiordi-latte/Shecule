@@ -14,8 +14,10 @@ import java.time.*;
 import java.util.ResourceBundle;
 
 /**
+ * @Author Andrew Rusnac
  * Controller for the AddApointment view
  * Lambda expressions are used for GUI interactions to simplify the code and make it more readable
+ * the lambdas also allow for flexibility and reuse
  */
 
 public class AddAppointmentController implements Initializable {
@@ -105,10 +107,12 @@ public class AddAppointmentController implements Initializable {
             LocalDateTime startLT = LocalDateTime.of(date, LocalTime.parse(start));
             LocalDateTime endLT = LocalDateTime.of(date, LocalTime.parse(end));
 
+            LocalTime businessClose = endLT.toLocalTime();
             int hourStart = startLT.getHour();
             int hourEnd = endLT.getHour();
 
-            boolean officeHours = hourStart >= 8 && hourEnd < 22;
+
+            boolean officeHours = hourStart >= 8 && businessClose.isBefore(LocalTime.parse("22:01"));
             boolean startBeforeEnd = startLT.isBefore(endLT);
 
             if(!officeHours){
@@ -174,9 +178,10 @@ public class AddAppointmentController implements Initializable {
 
         for (Appointment appointment : AppointmentMgmt.getAppointments()){
 
-            if(startTime.isAfter(appointment.getStartTime()) && startTime.isBefore(appointment.getEndTime()) || endTime.isAfter(appointment.getStartTime()) && endTime.isBefore(appointment.getEndTime()) || startTime.isEqual(appointment.getStartTime())){
-                System.out.println(appointment.getStartTime());
+            if(startTime.isAfter(appointment.getLocalStartTime()) && startTime.isBefore(appointment.getLocalEndTime()) || endTime.isAfter(appointment.getLocalStartTime()) && endTime.isBefore(appointment.getLocalEndTime()) || startTime.isEqual(appointment.getLocalStartTime())){
+
                 if(appointment.getCid() == custId){
+
                     return true;
                 }
             }

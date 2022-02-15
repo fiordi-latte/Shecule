@@ -18,8 +18,10 @@ import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
 
 /**
+ * @Author Andrew Rusnac
  * Controller for the update appointment view
  * Lambda expressions are used to simplify the code for GUI interactions making it more readable and saving time
+ * the lambdas also allow for flexibility and reuse
  */
 
 public class UpdateAppointmentController implements Initializable {
@@ -137,6 +139,8 @@ public class UpdateAppointmentController implements Initializable {
             LocalDateTime startLT = LocalDateTime.of(date, LocalTime.parse(start));
             LocalDateTime endLT = LocalDateTime.of(date, LocalTime.parse(end));
 
+            LocalTime businessClose = endLT.toLocalTime();
+
             if(startLT.isBefore(LocalDateTime.now())){
                 ErrorCheck.displayError("Please pick a time in the future");
                 return;
@@ -145,7 +149,7 @@ public class UpdateAppointmentController implements Initializable {
             int hourStart = startLT.getHour();
             int hourEnd = endLT.getHour();
 
-            boolean officeHours = hourStart >= 8 && hourEnd < 22;
+            boolean officeHours = hourStart >= 8 && businessClose.isBefore(LocalTime.parse("22:01"));
             boolean startBeforeEnd = startLT.isBefore(endLT);
             if(!officeHours){
                 ErrorCheck.displayError("Hours must be between 08:00 and 22:00");
@@ -176,6 +180,7 @@ public class UpdateAppointmentController implements Initializable {
 
             if(AddAppointmentController.customerAppExists(customerID, startLDT, endLDT))
             {
+
                 ErrorCheck.displayError("The appointment times overlap with this customers existing appointment");
                 return;
             }

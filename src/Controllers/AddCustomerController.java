@@ -17,8 +17,10 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 /**
+ * @Author Andrew Rusnac
  * Controller for the AddCustomer view
  * Lambda expressions are used for GUI interactions to simplify the code and make it more readable
+ * the lambdas also allow for flexibility and reuse
  */
 
 public class AddCustomerController implements Initializable {
@@ -96,7 +98,7 @@ public class AddCustomerController implements Initializable {
         });
 
         /**
-         * Lambda expression to handle when the save button is preseed
+         * Lambda expression to handle when the save button is pressed
          */
         saveButton.setOnAction(e -> {
             int id;
@@ -126,6 +128,8 @@ public class AddCustomerController implements Initializable {
                     newAlert.showAndWait();
                     return;
                 }
+
+
 
                 Customer newCustomer = new Customer(name);
                 newCustomer.setCustID(id);

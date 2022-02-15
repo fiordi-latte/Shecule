@@ -1,15 +1,15 @@
 package util;
 
-/**
- * Gets and manages the information for divisions from the database
- */
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Division;
 import model.JDBC;
 
 import java.sql.*;
+/**
+ * Gets and manages the information for divisions from the database
+ */
+
 
 public class DivisionMgmt {
     Statement sm = null;
