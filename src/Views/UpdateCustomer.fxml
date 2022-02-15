@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="498.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.UpdateCustomerController">
    <children>
       <AnchorPane prefHeight="507.0" prefWidth="498.0">
@@ -26,6 +25,8 @@
             <TextField fx:id="customerZipCodeInput" layoutX="213.0" layoutY="177.0" />
             <Button fx:id="saveButton" layoutX="249.0" layoutY="400.0" mnemonicParsing="false" text="Save" />
             <Button fx:id="cancelButton" layoutX="321.0" layoutY="400.0" mnemonicParsing="false" text="Cancel" />
+            <Label layoutX="73.0" layoutY="25.0" text="Customer ID" />
+            <Label fx:id="custIdLabel" layoutX="213.0" layoutY="25.0" text="Label" />
          </children>
       </AnchorPane>
    </children>

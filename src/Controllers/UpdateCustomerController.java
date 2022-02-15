@@ -2,10 +2,7 @@ package Controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Country;
 import model.Customer;
@@ -29,9 +26,15 @@ import java.util.ResourceBundle;
 public class UpdateCustomerController implements Initializable {
     @FXML
     public TextField customerNameInput;
+    @FXML
     public TextField customerPhoneInput;
+    @FXML
     public TextField customerAddressInput;
+    @FXML
     public TextField customerZipCodeInput;
+    @FXML
+    public Label custIdLabel;
+    @FXML
     public ComboBox customerCountryInput;
     public ComboBox<String> customerStateInput;
     public Button saveButton;
@@ -48,6 +51,7 @@ public class UpdateCustomerController implements Initializable {
         customerPhoneInput.setText(updateCustomer.getCustPhone());
         customerAddressInput.setText(updateCustomer.getCustAddress());
         customerZipCodeInput.setText(updateCustomer.getCustZip());
+        custIdLabel.setText(String.valueOf(updateCustomer.getCustID()));
 
         customerCountryInput.getSelectionModel().select(updateCustomer.getCustCid());
 
@@ -87,7 +91,7 @@ public class UpdateCustomerController implements Initializable {
          * auto-populate state/provence combobox based on already selected option
          */
         selectedIndex = customerCountryInput.getSelectionModel().getSelectedIndex();
-        System.out.println(selectedIndex);
+
         int newID = 0;
         if (selectedIndex == 0) {
 
@@ -115,7 +119,7 @@ public class UpdateCustomerController implements Initializable {
             customerStateInput.getItems().clear();
 
             selectedIndex = customerCountryInput.getSelectionModel().getSelectedIndex();
-            System.out.println(selectedIndex);
+
             int cid = 0;
             if (selectedIndex == 0) {
 
